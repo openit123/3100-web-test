@@ -62,10 +62,23 @@ app.use(expressValidator({
   }
 }));
 
+<<<<<<< HEAD
 // Connect Flash
 app.use(flash());
 
 // Global Vars
+=======
+app.get('/feedback', function(req, res) {
+    res.render('trash_feedback/trash', {title:'Feedback'});
+});
+
+app.get('/feedback/text', function(req, res) {
+    let input = req.query.text;
+    res.json({result: input});
+});
+
+// catch 404 and forward to error handler
+>>>>>>> f52a4a353865452acd674e0ed5ad2e402e91f3ea
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
