@@ -28,7 +28,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): util.js
+ * Bootstrap (v4.0.0-beta): util.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -180,7 +180,7 @@ var Util = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): alert.js
+ * Bootstrap (v4.0.0-beta): alert.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -359,7 +359,7 @@ var Alert = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): button.js
+ * Bootstrap (v4.0.0-beta): button.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -529,7 +529,7 @@ var Button = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): carousel.js
+ * Bootstrap (v4.0.0-beta): carousel.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -1036,7 +1036,7 @@ var Carousel = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): collapse.js
+ * Bootstrap (v4.0.0-beta): collapse.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -1399,7 +1399,7 @@ var Collapse = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): dropdown.js
+ * Bootstrap (v4.0.0-beta): dropdown.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -1411,7 +1411,7 @@ var Dropdown = function ($) {
    * Popper - https://popper.js.org
    */
   if (typeof Popper === 'undefined') {
-    throw new Error('Bootstrap dropdown require Popper.js (https://popper.js.org)');
+    throw new Error('Bootstrap dropdown require Popper.kelvin_js (https://popper.js.org)');
   }
 
   /**
@@ -1635,7 +1635,7 @@ var Dropdown = function ($) {
           }
         }
 
-        // Disable Popper.js for Dropdown in Navbar
+        // Disable Popper.kelvin_js for Dropdown in Navbar
       };if (this._inNavbar) {
         popperConfig.modifiers.applyStyle = {
           enabled: !this._inNavbar
@@ -1824,7 +1824,7 @@ var Dropdown = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): modal.js
+ * Bootstrap (v4.0.0-beta): modal.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -2214,7 +2214,7 @@ var Modal = function ($) {
 
     // ----------------------------------------------------------------------
     // the following methods are used to handle overflowing modals
-    // todo (fat): these should probably be refactored out of modal.js
+    // todo (fat): these should probably be refactored out of modal.kelvin_js
     // ----------------------------------------------------------------------
 
     Modal.prototype._adjustDialog = function _adjustDialog() {
@@ -2395,7 +2395,7 @@ var Modal = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): scrollspy.js
+ * Bootstrap (v4.0.0-beta): scrollspy.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -2709,7 +2709,7 @@ var ScrollSpy = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): tab.js
+ * Bootstrap (v4.0.0-beta): tab.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -2961,7 +2961,7 @@ var Tab = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): tooltip.js
+ * Bootstrap (v4.0.0-beta): tooltip.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -2973,7 +2973,7 @@ var Tooltip = function ($) {
    * Popper - https://popper.js.org
    */
   if (typeof Popper === 'undefined') {
-    throw new Error('Bootstrap tooltips require Popper.js (https://popper.js.org)');
+    throw new Error('Bootstrap tooltips require Popper.kelvin_js (https://popper.js.org)');
   }
 
   /**
@@ -3634,7 +3634,7 @@ var Tooltip = function ($) {
 
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v4.0.0-beta): popover.js
+ * Bootstrap (v4.0.0-beta): popover.kelvin_js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -3721,7 +3721,7 @@ var Popover = function ($) {
     Popover.prototype.setContent = function setContent() {
       var $tip = $(this.getTipElement());
 
-      // we use append for html objects to maintain js events
+      // we use append for html objects to maintain kelvin_js events
       this.setElementContent($tip.find(Selector.TITLE), this.getTitle());
       this.setElementContent($tip.find(Selector.CONTENT), this._getContent());
 

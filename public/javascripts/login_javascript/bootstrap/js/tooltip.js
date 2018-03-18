@@ -99,7 +99,7 @@ var DEFAULT_OPTIONS = {
 
 var Tooltip = function () {
   /**
-   * Create a new Tooltip.js instance
+   * Create a new Tooltip.kelvin_js instance
    * @class Tooltip
    * @param {HTMLElement} reference - The DOM node used as reference of the tooltip (it can be a jQuery element).
    * @param {Object} options
@@ -123,11 +123,11 @@ var Tooltip = function () {
    *      How tooltip is triggered - click, hover, focus, manual.
    *      You may pass multiple triggers; separate them with a space. `manual` cannot be combined with any other trigger.
    * @param {HTMLElement} options.boundariesElement
-   *      The element used as boundaries for the tooltip. For more information refer to Popper.js'
+   *      The element used as boundaries for the tooltip. For more information refer to Popper.kelvin_js'
    *      [boundariesElement docs](https://popper.js.org/popper-documentation.html)
-   * @param {Number|String} options.offset=0 - Offset of the tooltip relative to its reference. For more information refer to Popper.js'
+   * @param {Number|String} options.offset=0 - Offset of the tooltip relative to its reference. For more information refer to Popper.kelvin_js'
    *      [offset docs](https://popper.js.org/popper-documentation.html)
-   * @param {Object} options.popperOptions={} - Popper options, will be passed directly to popper instance. For more information refer to Popper.js'
+   * @param {Object} options.popperOptions={} - Popper options, will be passed directly to popper instance. For more information refer to Popper.kelvin_js'
    *      [options docs](https://popper.js.org/popper-documentation.html)
    * @return {Object} instance - The generated tooltip instance
    */
@@ -536,4 +536,4 @@ var _initialiseProps = function _initialiseProps() {
 return Tooltip;
 
 })));
-//# sourceMappingURL=tooltip.js.map
+//# sourceMappingURL=tooltip.kelvin_js.map
