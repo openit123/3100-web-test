@@ -35,6 +35,15 @@ app.get('/register',function(req,res){
 
 });
 
+app.get('/feedback', function(req, res) {
+    res.render('trash_feedback/trash', {title:'Feedback'});
+});
+
+app.get('/feedback/text', function(req, res) {
+    let input = req.query.text;
+    res.json({result: input});
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
