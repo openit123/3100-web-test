@@ -113,7 +113,7 @@ myfirst.post('/pets/add', function(req, res){
 
           db.pets.find(function (err, docs){
             console.log(docs);
-            res.render('index.ejs', {
+            res.render('index2.ejs', {
               pets: docs,
               types_of_pet: search.types_of_pet,
               gender: search.gender,
