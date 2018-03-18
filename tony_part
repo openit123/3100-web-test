@@ -93,7 +93,7 @@ var pets = [
 myfirst.get('/', function(req, res, data){
     db.pets.find(function (err, docs){
       console.log(docs);
-      res.render('index.ejs', {
+      res.render('index2.ejs', {
         pets: docs,
 
       });
