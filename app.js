@@ -14,16 +14,12 @@ var mongoose = require('mongoose'); // API between nodejs and mongo
 mongoose.connect('mongodb://localhost/loginapp'); // can modify the last items 'abc'
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 // Init App
 var app = express();
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout:'layout'}));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs');
 
 // BodyParser Middleware
 app.use(bodyParser.json());
@@ -62,12 +58,7 @@ app.use(expressValidator({
   }
 }));
 
-<<<<<<< HEAD
-// Connect Flash
 app.use(flash());
-
-// Global Vars
-=======
 app.get('/feedback', function(req, res) {
     res.render('trash_feedback/trash', {title:'Feedback'});
 });
@@ -78,7 +69,6 @@ app.get('/feedback/text', function(req, res) {
 });
 
 // catch 404 and forward to error handler
->>>>>>> f52a4a353865452acd674e0ed5ad2e402e91f3ea
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
