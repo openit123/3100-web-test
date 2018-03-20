@@ -14,9 +14,6 @@ var mongoose = require('mongoose'); // API between nodejs and mongo
 mongoose.connect('mongodb://localhost/loginapp'); // can modify the last items 'abc'
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 // Init App
 var app = express();
 
