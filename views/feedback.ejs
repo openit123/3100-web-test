@@ -22,7 +22,7 @@
     <br>
     <textarea rows = "25" cols = "130" id = "text"></textarea>
     <br>
-    <input type="submit" value="Submit" onclick = "Mail()">
+    <button type="button" onclick = "Mail()">Submit</button>
     <p id = "status" style = "font-size:35px"></p>
 
 
@@ -32,17 +32,18 @@
             var status = document.getElementById("status");
             var words = text.value;
             var rude = "fuck";
+            status.innerHTML = "";
             if(words == "") {
-                status.innerHTML = "Oops. You submitted a blank feedback. Please enter again!";
+                alert("Oops. You submitted a blank feedback. Please enter again!");
             }
             else{
                 if(words.search(rude) != -1){
-                    status.innerHTML = "Wow! Mind your language!";
                     text.value = "";
+                    alert("Wow! Mind your language!");
                 }
                 else {
                     window.location.href = "mailto:alvin2b35@yahoo.com.hk?subject=%5BPaw%2Dfect%20Match%5D%20Feedback&body=" + words;
-                    status.innerHTML = "An email has sent to the admin. Thank you for your support!";
+                    status.innerHTML = "One more step! Thank you for your support!";
                     text.value = "";
                 }
             }
