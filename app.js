@@ -97,3 +97,36 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+/*use these data as testcases!!
+var pets = [
+  {
+    id: 1,
+    name: 'teddy',
+    types_of_pet: 'dog',
+    gender: 'm',
+    years_old: 5
+  },
+  {
+    id: 2,
+    name: 'tommy',
+    types_of_pet: 'cat',
+    gender: 'm',
+    years_old: 2
+  },
+  {
+    id: 3,
+    name: 'cody',
+    types_of_pet: 'dog',
+    gender: 'f',
+    years_old: 2
+  },
+  {
+    id: 4,
+    name: 'jenny',
+    types_of_pet: 'cat',
+    gender: 'f',
+    years_old: 7
+  },
+]
+*/
