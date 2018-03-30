@@ -6,10 +6,124 @@
 
     <style>
 
+        .btn {
+            -webkit-border-radius: 28;
+            -moz-border-radius: 28;
+            border-radius: 28px;
+            font-family: Arial;
+            color: #ffffff;
+            font-size: 20px;
+            background: #9daab3;
+            padding: 10px 20px 10px 20px;
+            text-decoration: none;
+            margin: 5px 5px 5px 5px;
+        }
+
+        .btn:hover {
+            background: #3cb0fd;
+            background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+            text-decoration: none;
+        }
+
+        .myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+
+        .myImg:hover {opacity: 0.7;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (Image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image (Image Text) - Same Width as the Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation - Zoom in the Modal */
+        .modal-content, #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)}
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+
         .item2 { grid-area: menu; }
         .item3 { grid-area: main; }
         .w3-animate-opacity{animation:opac 0.8s}@keyframes opac{from{opacity:0} to{opacity:1}}
-
+        .scrolling{overflow: auto;}
+        .petRows {display: flex;
+            flex-direction: row;}
+        .petCols {display: flex;
+            flex-direction: column;}
         .grid-container {
             display: grid;
             grid-template-areas:
@@ -27,8 +141,24 @@
             text-align: left;
             padding: 20px 20px;
             font-size: 20px;
-            height: 480px;
+            height: 460px;
 
+        }
+
+        hr {
+
+            position: relative;
+            padding: 0;
+            margin: 8px auto;
+            height: 0;
+            width: 80%;
+            max-height: 0;
+            font-size: 1px;
+            line-height: 0;
+            clear: both;
+            border: none;
+            border-top: 1px solid #aaaaaa;
+            border-bottom: 1px solid #ffffff;
         }
 
     </style>
@@ -65,34 +195,80 @@
                 <input type="submit" value="Filter">
             </form>
         </div>
-        <div class="item3 w3-animate-opacity">
+        <div class="item3 w3-animate-opacity scrolling">
+
             <h3>Pet list</h3>
-            <ul>
 
-                <% pets.forEach(function(pets, search){ %>
-                <% if(pets.types_of_pet == types_of_pet && pets.gender == gender && pets.years_old < years_old) {%>
-                <li style="list-style-type:circle">Name:     <%= pets.name %></li>
-                <li style="list-style-type:none">Type:     <%= pets.types_of_pet %></li>
-                <li style="list-style-type:none">Gender:     <%= pets.gender %></li>
-                <li style="list-style-type:none">Years_old:      <%= pets.years_old %></li>
-                <br>
-                <% } %>
-                <%  }) %>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-            </ul>
+            <% pets.forEach(function(pets, search){ %>
+            <% if(pets.types_of_pet == types_of_pet && pets.gender == gender && pets.years_old < years_old) {%>
+            <img class="myImg" src="../images/<%= pets.name %>.jpg" alt="pet photo" style="height:180px;float:right;">
+
+            <img class="myImg" src="../images/<%= pets.name %>2.jpg" alt="pet photo" style="height:180px;float:right;">
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- The Close Button -->
+                <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+                <!-- Modal Content (The Image) -->
+                <img class="modal-content" id="img01">
+
+                <!-- Modal Caption (Image Text) -->
+                <div id="caption"></div>
+            </div>
+            <p>Name:     <%= pets.name %></p>
+            <p>Type:     <%= pets.types_of_pet %></p>
+            <p>Gender:     <%= pets.gender %></p>
+
+            <p>Years_old:      <%= pets.years_old %></p>
+            <button type="button" class="btn" >Click to know more ! </button>
+            <hr>
+
+
+            <% } %>
+            <%  }); %>
+
+
+
+
 
         </div>
     </div>
 </div>
 
 <script>
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
 
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+    }
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = $('.myImg');
+    var modalImg = $("#img01");
+    var captionText = document.getElementById("caption");
+    $('.myImg').click(function(){
+        modal.style.display = "block";
+        var newSrc = this.src;
+        modalImg.attr('src', newSrc);
+        captionText.innerHTML = this.alt;
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 </script>
 
 </body>
