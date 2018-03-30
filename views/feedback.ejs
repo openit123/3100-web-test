@@ -1,0 +1,56 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style2.css" />
+
+    <style>
+
+        .item2 { grid-area: menu; }
+        .item3 { grid-area: main; }
+        .w3-animate-opacity{animation:opac 0.8s}@keyframes opac{from{opacity:0} to{opacity:1}}
+
+
+    </style>
+</head>
+
+<body bgcolor = "#ffc0cb">
+
+<h1>Feedback</h1>
+
+    <font size = "4"> Feel free to leave any comments. Your feedbacks are important to us. </font>
+    <br>
+    <textarea rows = "25" cols = "130" id = "text"></textarea>
+    <br>
+    <input type="submit" value="Submit" onclick = "Mail()">
+    <p id = "status" style = "font-size:35px"></p>
+
+
+<script>
+        function Mail() {
+            var text = document.getElementById("text");
+            var status = document.getElementById("status");
+            var words = text.value;
+            var rude = "fuck";
+            if(words == "") {
+                status.innerHTML = "Oops. You submitted a blank feedback. Please enter again!";
+            }
+            else{
+                if(words.search(rude) != -1){
+                    status.innerHTML = "Wow! Mind your language!";
+                    text.value = "";
+                }
+                else {
+                    window.location.href = "mailto:alvin2b35@yahoo.com.hk?subject=%5BPaw%2Dfect%20Match%5D%20Feedback&body=" + words;
+                    status.innerHTML = "An email has sent to the admin. Thank you for your support!";
+                    text.value = "";
+                }
+            }
+        }
+       // text.oninput = function(){
+       //     status.innerHTML = text.value;
+        //}
+</script>
+
+</body>
+</html>

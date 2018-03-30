@@ -1,5 +1,6 @@
 #folder
 .idea/
+.node_modules/
 
 #file
-.idea/workspace.xml
+idea/workspace.xml
