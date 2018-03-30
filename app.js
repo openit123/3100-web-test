@@ -12,14 +12,14 @@ var app = express();
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient,format = require('util').format;
-MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
-    if(err){
-        throw err;
-    }else{
-        console.log("connected");
-    }
-    db.close();
-});
+// MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
+//     if(err){
+//         throw err;
+//     }else{
+//         console.log("connected");
+//     }
+//     db.close();
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,6 +39,10 @@ app.get('/', function (req, res) {
 
 app.get('/feedback', function (req, res) {
     res.render('feedback.ejs');
+})
+
+app.get('/profile', function (req, res) {
+    res.render('profile.ejs');
 })
 
 app.get('/search', function (req, res, data) {
@@ -64,7 +68,6 @@ app.get('/signin',function (req,res){
 
 //post
 app.post('/pets/add', function(req, res){
-
     var search ={
         types_of_pet: req.body.types_of_pet,
         gender: req.body.gender,

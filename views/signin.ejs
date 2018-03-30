@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
@@ -18,29 +20,29 @@
 <div id="wrapper">
 
     <!-- Header -->
-            <header id="header">
-                <h1><a href="/">Animal Tinder</a></h1>
-                <nav class="links">
+    <header id="header">
+        <h1><a href="/">Animal Tinder</a></h1>
+        <nav class="links">
             <ul>
                 <!--sign in only show when user not login-->
                 <li><a href="/signin">Sign in</a></li>
                 <!--below function need to be login to show-->
                 <!--use session to check whether it is login or not-->
-                <li><a href="#">Profile</a></li>
+                <li><a href="/profile">profile</a></li>
                 <li><a href="#">matching</a></li>
                 <li><a href="#">feedback</a></li>
                 <li><a href="#">useful link</a></li>
-                <li><a href="#">About us</a></li>
+                <li><a href="#">about us</a></li>
             </ul>
         </nav>
         <nav class="main">
             <ul>
-                <li class="search">
-                    <a class="fa-search" href="#search">Search</a>
-                    <form id="search" method="get" action="#">
-                        <input type="text" name="query" placeholder="Search"/>
-                    </form>
-                </li>
+                <!--<li class="search">-->
+                <!--<a class="fa-search" href="#search">Search</a>-->
+                <!--<form id="search" method="get" action="#">-->
+                <!--<input type="text" name="query" placeholder="Search"/>-->
+                <!--</form>-->
+                <!--</li>-->
                 <li class="menu">
                     <a class="fa-bars" href="#menu">Menu</a>
                 </li>
@@ -50,13 +52,6 @@
 
     <!-- Menu -->
     <section id="menu">
-        <!-- Search -->
-        <section>
-            <form class="search" method="get" action="#">
-                <input type="text" name="query" placeholder="Search"/>
-            </form>
-        </section>
-
         <!-- Links -->
         <section>
             <ul class="links">
@@ -86,21 +81,98 @@
 
     <!-- Main -->
     <div id="main">
-        <!-- Footer -->
-        <section id="footer">
-            <ul class="icons">
-                <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
-                <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <p class="copyright">&copy; </p>
-        </section>
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="emailaddr" aria-describedby="emailHelp"
+                       placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="passwd" placeholder="Password">
+            </div>
+
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom01">First name</label>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name"
+                           value="Mark" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom02">Last name</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto"
+                           required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustomUsername">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend">#</span>
+                        </div>
+                        <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
+                               aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Country</label>
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="Country" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid Country.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationCustom04">District</label>
+                    <input type="text" class="form-control" id="validationCustom04" placeholder="District" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid District.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationCustom05">Zone</label>
+                    <input type="text" class="form-control" id="validationCustom05" placeholder="Zone" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid Zone.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                        You must agree before submitting.
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
     </div>
+
 </div>
 
 <!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/skel.min.js"></script>
 <script src="assets/js/util.js"></script>

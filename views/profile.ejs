@@ -68,6 +68,7 @@
             <ul class="actions vertical">
                 <li><a href="#" class="button big fit">Log In</a></li>
             </ul>
+
             <ul class="actions vertical">
                 <li><a href="#" class="button big fit">Log Out</a></li>
             </ul>
@@ -80,59 +81,92 @@
 
     <!-- Main -->
     <div id="main">
-
         <form>
+
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block" src="../images/images.png" height="300" width="400">
+                    </div>
+                </div>
+            </div>
+
+            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
+                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                <a class="button small fit">Upload</a>
+            </span>
+
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Feedback</label>
-                <textarea class="form-control" id="text" rows="3"></textarea>
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="emailaddr" aria-describedby="emailHelp"
+                       placeholder="Enter email">
             </div>
-            <div class="alert alert-danger" role="alert" id="status" style="display: none">
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="passwd" placeholder="Password">
             </div>
-            <div class="alert alert-success" role="alert" id="status2" style="display: none">
-                This is a success alert—check it out!
+
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom01">First name</label>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name"
+                           value="Mark" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustom02">Last name</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto"
+                           required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationCustomUsername">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend">#</span>
+                        </div>
+                        <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
+                               aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button type="button" onclick="Mail()">Submit</button>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Country</label>
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="Country" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid Country.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationCustom04">District</label>
+                    <input type="text" class="form-control" id="validationCustom04" placeholder="District" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid District.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationCustom05">Zone</label>
+                    <input type="text" class="form-control" id="validationCustom05" placeholder="Zone" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid Zone.
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Update</button>
         </form>
-
-
     </div>
+
 </div>
 
 <!-- Scripts -->
-
-<script>
-    function Mail() {
-        var text = document.getElementById("text");
-        var status = document.getElementById("status");
-        var status2 = document.getElementById("status2");
-        var words = text.value;
-        var rude = "fuck";
-        if (words == "") {
-            status2.style.display='none';
-            status.innerHTML = "Oops. You submitted a blank feedback. Please enter again!";
-            status.style.display='block';
-        }
-        else {
-            if (words.search(rude) != -1) {
-                status.innerHTML = "Wow! Mind your language! be polite!";
-                text.value = "";
-                status.style.display='block';
-            }
-            else {
-                window.location.href = "mailto:alvin2b35@yahoo.com.hk?subject=%5BPaw%2Dfect%20Match%5D%20Feedback&body=" + words;
-                status2.innerHTML = "An email has sent to the admin. Thank you for your support!";
-                status2.style.display='block';
-                status.style.display='none';
-                text.value = "";
-            }
-        }
-    }
-
-    // text.oninput = function(){
-    //     status.innerHTML = text.value;
-    //}
-</script>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
