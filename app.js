@@ -27,10 +27,6 @@ app.get('/feedback', function (req, res) {
     res.render('feedback.ejs');
 })
 
-app.get('/profile', function (req,res) {
-    res.render('profile.ejs');
-})
-
 app.get('/search', function (req, res) {
     res.render('search.ejs');
 })

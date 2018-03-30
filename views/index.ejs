@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
@@ -26,21 +28,21 @@
                 <li><a href="/signin">Sign in</a></li>
                 <!--below function need to be login to show-->
                 <!--use session to check whether it is login or not-->
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile">profile</a></li>
                 <li><a href="#">matching</a></li>
                 <li><a href="/feedback">feedback</a></li>
                 <li><a href="#">useful link</a></li>
-                <li><a href="#">About us</a></li>
+                <li><a href="#">about us</a></li>
             </ul>
         </nav>
         <nav class="main">
             <ul>
-                <li class="search">
-                    <a class="fa-search" href="#search">Search</a>
-                    <form id="search" method="get" action="#">
-                        <input type="text" name="query" placeholder="Search"/>
-                    </form>
-                </li>
+                <!--<li class="search">-->
+                <!--<a class="fa-search" href="#search">Search</a>-->
+                <!--<form id="search" method="get" action="#">-->
+                <!--<input type="text" name="query" placeholder="Search"/>-->
+                <!--</form>-->
+                <!--</li>-->
                 <li class="menu">
                     <a class="fa-bars" href="#menu">Menu</a>
                 </li>
@@ -50,14 +52,6 @@
 
     <!-- Menu -->
     <section id="menu">
-
-        <!-- Search -->
-        <section>
-            <form class="search" method="get" action="#">
-                <input type="text" name="query" placeholder="Search"/>
-            </form>
-        </section>
-
         <!-- Links -->
         <section>
             <ul class="links">
@@ -638,6 +632,15 @@
 </div>
 
 <!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/skel.min.js"></script>
 <script src="assets/js/util.js"></script>
