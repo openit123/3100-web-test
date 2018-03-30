@@ -1,63 +1,3 @@
-<<<<<<< HEAD
-<html>
-<head>
-    <link rel="stylesheet" href="/css/bootstrap.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/style2.css" />
-</head>
-<style>
-    input{
-        border: none;
-        background-color: transparent;
-    }
-</style>
-<body bgcolor = #f5deb3  onload = "Display()">
-
-<h1>User Profile</h1>
-    Username: <input type = "text" id = "username">
-    Email: <input type = "text" id = "email"><br><br>
-    Pet's name: <input type = "text" id = "pet_name">
-    Types of pets:<select name="Types of pet" id = "pet_type">
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-    </select><br><br>
-    Pet's age: <input type = "text" id = "pet_age">
-    Pet's gender:<select name="Gender of pet" id = "pet_gender">
-        <option value="m">M</option>
-        <option value="f">F</option>
-    </select><br><br>
-    Pet's description:<br><br>
-    <textarea rows = "10" cols = "130" id = "pet_description"></textarea>
-    <br><br>
-    <button type = "button" id = "edit" onclick = "Edit()">Edit</button>
-    <button type = "button" style = "visibility:hidden" id = "submit" onclick = "Save()">Submit</button>
-
-
-<script>
-    function Display(){
-        document.getElementById("username").value = "HHH";
-        document.getElementById("email").value = "abc@y";
-
-    }
-    function Edit(){
-        var edit = document.getElementById("edit");
-        var submit = document.getElementById("submit");
-        document.getElementById("edit").style.visibility = "hidden";
-        document.getElementById("submit").style.visibility = "visible";
-    }
-
-    function Save(){
-        var username = document.getElementById("username");
-        var edit = document.getElementById("edit");
-        var submit = document.getElementById("submit");
-        username.style.backgroundColor = "transparent";
-        username.style.border = "none";
-        edit.style.visibility = "visible";
-        submit.style.visibility = "hidden";
-    }
-
-</script>
-=======
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -74,7 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
+<body onload = "Display()">
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -157,27 +97,27 @@
             </span>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
+                <label for="emailaddr">Email address</label>
                 <input type="email" class="form-control" id="emailaddr" aria-describedby="emailHelp"
                        placeholder="Enter email">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
+                <label for="passwd">Password</label>
                 <input type="password" class="form-control" id="passwd" placeholder="Password">
             </div>
 
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="validationCustom01">First name</label>
-                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name"
+                    <label for="f_name">First name</label>
+                    <input type="text" class="form-control" id="f_name" placeholder="First name"
                            value="Mark" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="validationCustom02">Last name</label>
-                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto"
+                    <label for="l_name">Last name</label>
+                    <input type="text" class="form-control" id="l_name" placeholder="Last name" value="Otto"
                            required>
                     <div class="valid-feedback">
                         Looks good!
@@ -199,32 +139,75 @@
             </div>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
-                    <label for="validationCustom03">Country</label>
-                    <input type="text" class="form-control" id="validationCustom03" placeholder="Country" required>
+                    <label for="country">Country</label>
+                    <input type="text" class="form-control" id="country" placeholder="Country" required>
                     <div class="invalid-feedback">
                         Please provide a valid Country.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label for="validationCustom04">District</label>
-                    <input type="text" class="form-control" id="validationCustom04" placeholder="District" required>
+                    <label for="district">District</label>
+                    <input type="text" class="form-control" id="district" placeholder="District" required>
                     <div class="invalid-feedback">
                         Please provide a valid District.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label for="validationCustom05">Zone</label>
-                    <input type="text" class="form-control" id="validationCustom05" placeholder="Zone" required>
+                    <label for="zone">Zone</label>
+                    <input type="text" class="form-control" id="zone" placeholder="Zone" required>
                     <div class="invalid-feedback">
                         Please provide a valid Zone.
                     </div>
                 </div>
             </div>
-            <button type="submit">Update</button>
+            <div class = "form-row">
+                <div class="col-md-3 mb-3">
+                    <label for="p_name">Pet's name</label>
+                    <input type="text" class="form-control" id="p_name" placeholder="Pet's name" required>
+                    <div class="invalid-feedback">
+                        Please tell us your pet's name.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                        <label for="p_age">Pet's age</label>
+                        <input type="text" class="form-control" id="p_age" placeholder="Pet's age" required>
+                        <div class="invalid-feedback">
+                            Please tell us your pet's age.
+                        </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="p_gender">Pet's gender</label>
+                    <select name="Pet's gender" class="form-control" id="p_gender" required>
+                        <option selected="true" disabled="disabled">Pet's gender</option>
+                        <option value ="m">M</option>
+                        <option value = "f">F</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please tell us your pet's gender.
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="p_type">Type of pet</label>
+                    <input type="text" class="form-control" id="p_type" placeholder="Type of pet" required>
+                    <div class="invalid-feedback">
+                        Please provide your pet's type.
+                    </div>
+                </div>
+            </div>
+            <button type="submit" onclick = "Save()">Update</button>
         </form>
     </div>
 
 </div>
+
+<script>
+    function Display(){
+
+    }
+    function Save(){
+
+    }
+</script>
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -243,6 +226,5 @@
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 
->>>>>>> origin/master
 </body>
 </html>
