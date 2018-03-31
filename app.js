@@ -97,7 +97,7 @@ app.get('/search', function(req, res, data){
     })
 })
 
-app.post('/search/pets/add', function(req, res){
+app.post('/search', function(req, res){
     var search ={
         types_of_pet: req.body.types_of_pet,
         gender: req.body.gender,
