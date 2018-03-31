@@ -81,7 +81,7 @@
 
     <!-- Main -->
     <div id="main">
-        <form method = "POST" action="/profile">
+        <input method = "POST" action="/profile">
 
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -198,7 +198,7 @@
                 <label for="exampleFormControlTextarea1">Pet's description</label>
                 <textarea name="p_description" class="form-control" id="p_description" rows="8"></textarea>
             </div>
-            <button type="submit" onclick = "Save()">Update</button>
+            <input type="submit" value="Update">
         </form>
     </div>
 
@@ -209,16 +209,6 @@
 
     }
     function Save(){
-        var passwd = document.getElementById("passwd");
-        var emailaddr = document.getElementById("emailaddr");
-        var f_name = document.getElementById("f_name");
-        var l_name = document.getElementById("l_name");
-        var country = document.getElementById("country");
-        var district = documnent.getElementById("district");
-        var zone = document.getElementById("zone");
-
-            document.getElementById("success").innerHTML = "Updated.";
-            document.getElementById("success").style.display = 'block';
     }
 </script>
 

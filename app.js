@@ -39,6 +39,7 @@ app.use(function(req, res, next){
     res.locals.district = null;
     res.locals.country = null;
     res.locals.zone = null;
+    res.locals.emailaddr = null;
     next();
 });
 
@@ -66,18 +67,21 @@ app.get('/profile', function (req, res, data){
 })
 
 app.post('/profile', function(req, res){
-    var update ={
-        type_of_pet: req.body.type_of_pet,
-        p_gender: req.body.p_gender,
-        p_age: req.body.p_age,
-        district: req.body.district,
-        zone: req.body.zone,
-        country: req.body.country,
-        username: req.body.username,
-        p_description: req.body.p_description,
-        password: req.body.password,
+    var update ={ $set:
+            {
+                type_of_pet: req.body.type_of_pet,
+                p_gender: req.body.p_gender,
+                p_age: req.body.p_age,
+                district: req.body.district,
+                zone: req.body.zone,
+                country: req.body.country,
+                username: req.body.username,
+                p_description: req.body.p_description,
+                password: req.body.password,
+            }
     }
-    db.pets.save(function (err, docs){
+    var alvin123 = {username: req.body.username};
+    db.pets.updateOne(alvin123, update, function (err, docs){
         console.log(docs);
         res.render('profile.ejs' , {
             pets: docs,
@@ -89,7 +93,7 @@ app.post('/profile', function(req, res){
             country: update.country,
             username: update.username,
             p_description: update.p_description,
-            password: update.password,
+            password: update.password
         });
     })
 })
@@ -176,8 +180,8 @@ var pets = [
 */
 
 //add them in db
-//db.pets.insert({"username":"alvin123", "password":"alvin123", "emailaddr":"alvin@ymail.com", "f_name":"Alvin", "l_name":"Luk", "country":"China", "district":"HK", "zone":1, "p_name":"vin", "p_age":8, "p_gender":"m", "type_of_p":"cat", "p_description":"h"})
-//db.pets.insert({"username":"kelvin123", "password":"kelvin123", "emailaddr":"kelvin@ymail.com", "f_name":"Kelvin", "l_name":"Siu", "country":"China", "district":"HK", "zone":2, "p_name":"kel", "p_age":6, "p_gender":"f","type_of_p":"cat", "p_description":"i"})
-//db.pets.insert({"username":"matthew123", "password":"matthew123", "emailaddr":"matthew@ymail.com", "f_name":"Matthew", "l_name":"Ting", "country":"China", "district":"HK", "zone":3, "p_name":"mat", "p_age":3, "p_gender":"m","type_of_p":"dog", "p_description":"j"})
-//db.pets.insert({"username":"tony123", "password":"tony123", "emailaddr":"tony@ymail.com", "f_name":"Tony", "l_name":"Tsang", "country":"China", "district":"HK", "zone":4, "p_name":"ton", "p_age":5, "p_gender":"f","type_of_p":"dog", "p_description":"k"})
+//db.pets.insert({"username":"alvin123", "password":"alvin123", "emailaddr":"alvin@ymail.com", "f_name":"Alvin", "l_name":"Luk", "country":"China", "district":"HK", "zone":1, "p_name":"teddy", "p_age":5, "p_gender":"m", "type_of_p":"dog", "p_description":"h"})
+//db.pets.insert({"username":"kelvin123", "password":"kelvin123", "emailaddr":"kelvin@ymail.com", "f_name":"Kelvin", "l_name":"Siu", "country":"China", "district":"HK", "zone":2, "p_name":"tommy", "p_age":2, "p_gender":"m","type_of_p":"cat", "p_description":"i"})
+//db.pets.insert({"username":"matthew123", "password":"matthew123", "emailaddr":"matthew@ymail.com", "f_name":"Matthew", "l_name":"Ting", "country":"China", "district":"HK", "zone":3, "p_name":"cody", "p_age":2, "p_gender":"f","type_of_p":"dog", "p_description":"j"})
+//db.pets.insert({"username":"tony123", "password":"tony123", "emailaddr":"tony@ymail.com", "f_name":"Tony", "l_name":"Tsang", "country":"China", "district":"HK", "zone":4, "p_name":"jenny", "p_age":7, "p_gender":"f","type_of_p":"cat", "p_description":"k"})
 //db.pets.insert({"username":"thomas123", "password":"thomas123", "emailaddr":"thomas@ymail.com", "f_name":"Thomas", "l_name":"Li", "country":"China", "district":"HK", "zone":5, "p_name":"mas", "p_age":2, "p_gender":"m","type_of_p":"cat", "p_description":"l"})
