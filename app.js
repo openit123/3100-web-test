@@ -1,22 +1,20 @@
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
-var MongoClient = require('mongodb').MongoClient,format = require('util').format;
-MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
-    if(err){
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
+MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+    if (err) {
         throw err;
-    }else{
+    } else {
         console.log("connected");
     }
     db.close();
 });
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -29,29 +27,44 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(function(req, res, next){
+app.use(session({
+    secret: 'saifbabfuisabf',
+    cookie: {maxAge: 60 * 1000 * 30},
+    saveUninitialized: true,
+    resave: true,
+}));
+app.use(function (req, res, next) {
     res.locals.errors = null;
     res.locals.types_of_pet = null;
     res.locals.gender = null;
     res.locals.years_old = null;
     next();
 });
-
 app.get('/', function (req, res) {
-    res.render('index.ejs');
-})
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    } else {
+        console.log("Session not assign");
+        req.session.sign = true;
+        var ssn = req.session;
+        ssn.email = "wqkrbe@gmail.com";
+        console.log(ssn.email);
+    }
+    res.render('index.ejs', {isLogined: logined});
+});
 
 app.get('/feedback', function (req, res) {
     res.render('feedback.ejs');
-})
+});
 
-app.get('/profile', function (req, res){
+app.get('/profile', function (req, res) {
     res.render('profile.ejs');
-})
+});
 
-app.get('/search', function(req, res, data){
-    db.pets.find(function (err, docs){
+app.get('/search', function (req, res, data) {
+    db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
             pets: docs,
@@ -59,13 +72,17 @@ app.get('/search', function(req, res, data){
     })
 });
 
-app.post('/search/pets/add', function(req, res){
-    var search ={
+app.get('/signin', function (req, res) {
+    res.render('signin.ejs');
+});
+
+app.post('/search/pets/add', function (req, res) {
+    var search = {
         types_of_pet: req.body.types_of_pet,
         gender: req.body.gender,
         years_old: req.body.years_old,
-    }
-    db.pets.find(function (err, docs){
+    };
+    db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
             pets: docs,
@@ -76,9 +93,10 @@ app.post('/search/pets/add', function(req, res){
     })
 });
 
-app.get('/signin',function (req,res){
-    res.render('signin.ejs');
-})
+app.post('/login', function (req, res) {
+    db.find(function (err, docs) {
+    });
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
