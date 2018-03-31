@@ -81,7 +81,7 @@
 
     <!-- Main -->
     <div id="main">
-        <form>
+        <form method = "POST">
 
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -129,7 +129,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupPrepend">#</span>
                         </div>
-                        <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
+                        <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="Username"
                                aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please choose a username.
@@ -140,21 +140,21 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="country">Country</label>
-                    <input type="text" class="form-control" id="country" placeholder="Country" required>
+                    <input type="text" name="country" class="form-control" id="country" placeholder="Country" required>
                     <div class="invalid-feedback">
                         Please provide a valid Country.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="district">District</label>
-                    <input type="text" class="form-control" id="district" placeholder="District" required>
+                    <input type="text" name="district" class="form-control" id="district" placeholder="District" required>
                     <div class="invalid-feedback">
                         Please provide a valid District.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="zone">Zone</label>
-                    <input type="text" class="form-control" id="zone" placeholder="Zone" required>
+                    <input type="text" name="zone" class="form-control" id="zone" placeholder="Zone" required>
                     <div class="invalid-feedback">
                         Please provide a valid Zone.
                     </div>
@@ -170,17 +170,17 @@
                 </div>
                 <div class="col-md-3 mb-3">
                         <label for="p_age">Pet's age</label>
-                        <input type="text" class="form-control" id="p_age" placeholder="Pet's age" required>
+                        <input type="text" name="p_age" class="form-control" id="p_age" placeholder="Pet's age" required>
                         <div class="invalid-feedback">
                             Please tell us your pet's age.
                         </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="p_gender">Pet's gender</label>
-                    <select name="Pet's gender" class="form-control" id="p_gender" required>
-                        <option selected="true" disabled="disabled">Pet's gender</option>
-                        <option value ="m">M</option>
-                        <option value = "f">F</option>
+                    <select name="p_gender" class="form-control" id="p_gender" required>
+                        <option selected="true" disabled="disabled">Please select</option>
+                        <option name="p_gender" value ="m">M</option>
+                        <option name="p_gender" value = "f">F</option>
                     </select>
                     <div class="invalid-feedback">
                         Please tell us your pet's gender.
@@ -188,13 +188,20 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="p_type">Type of pet</label>
-                    <input type="text" class="form-control" id="p_type" placeholder="Type of pet" required>
+                    <input type="text" name="type_of_pet" class="form-control" id="p_type" placeholder="Type of pet" required>
                     <div class="invalid-feedback">
                         Please provide your pet's type.
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Pet's description</label>
+                <textarea name="p_description" class="form-control" id="p_description" rows="8"></textarea>
+            </div>
             <button type="submit" onclick = "Save()">Update</button>
+            <div class="alert alert-success" role="alert" id="success" style="display: none">
+                This is a success alert—check it out!
+            </div>
         </form>
     </div>
 
@@ -205,7 +212,8 @@
 
     }
     function Save(){
-
+        document.getElementById("success").innerHTML = "Updated.";
+        document.getElementById("success").style.display = 'block';
     }
 </script>
 
