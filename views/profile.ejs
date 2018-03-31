@@ -81,7 +81,7 @@
 
     <!-- Main -->
     <div id="main">
-        <form method = "POST">
+        <form method = "POST" action="/profile">
 
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -103,7 +103,7 @@
             </div>
             <div class="form-group">
                 <label for="passwd">Password</label>
-                <input type="password" class="form-control" id="passwd" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="passwd" placeholder="Password">
             </div>
 
             <div class="form-row">
@@ -130,7 +130,7 @@
                             <span class="input-group-text" id="inputGroupPrepend">#</span>
                         </div>
                         <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="Username"
-                               aria-describedby="inputGroupPrepend" required>
+                               aria-describedby="inputGroupPrepend" value="alvin123" readonly required>
                         <div class="invalid-feedback">
                             Please choose a username.
                         </div>
@@ -199,9 +199,6 @@
                 <textarea name="p_description" class="form-control" id="p_description" rows="8"></textarea>
             </div>
             <button type="submit" onclick = "Save()">Update</button>
-            <div class="alert alert-success" role="alert" id="success" style="display: none">
-                This is a success alert—check it out!
-            </div>
         </form>
     </div>
 
@@ -212,8 +209,16 @@
 
     }
     function Save(){
-        document.getElementById("success").innerHTML = "Updated.";
-        document.getElementById("success").style.display = 'block';
+        var passwd = document.getElementById("passwd");
+        var emailaddr = document.getElementById("emailaddr");
+        var f_name = document.getElementById("f_name");
+        var l_name = document.getElementById("l_name");
+        var country = document.getElementById("country");
+        var district = documnent.getElementById("district");
+        var zone = document.getElementById("zone");
+
+            document.getElementById("success").innerHTML = "Updated.";
+            document.getElementById("success").style.display = 'block';
     }
 </script>
 

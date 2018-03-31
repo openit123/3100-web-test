@@ -252,20 +252,20 @@
                 <form method="POST" action="/search">
                     <label>Type of pets</label>
                     <br>
-                    <select name="types_of_pet">
+                    <select name="type_of_p">
                         <option value="dog">Dog</option>
                         <option value="cat">Cat</option>
                     </select>
                     <br>
                     <label>Gender</label>
                     <br>
-                    <input type="radio" name="gender" value="m" checked> Male<br>
-                    <input type="radio" name="gender" value="f"> Female<br>
+                    <input type="radio" name="p_gender" value="m" checked> Male<br>
+                    <input type="radio" name="p_gender" value="f"> Female<br>
 
                     <label>Pets' years_old</label>
                     <br>
                     <br>
-                    <input type="range" name="years_old" min="1" max="8" value="8" id="myRange">
+                    <input type="range" name="p_age" min="1" max="8" value="8" id="myRange">
                     <br>
                     <p>Under <span id="demo"></span> years_old</p>
 
@@ -279,10 +279,10 @@
 
 
                 <% pets.forEach(function(pets, search){ %>
-                <% if(pets.types_of_pet == types_of_pet && pets.gender == gender && pets.years_old < years_old) { %>
-                <img class="myImg" src="/images/<%= pets.name %>.jpg" alt="pet photo" style="height:180px;float:right;">
+                <% if(pets.type_of_p == type_of_p && pets.p_gender == p_gender && pets.p_age < p_age) { %>
+                <img class="myImg" src="/images/<%= pets.p_name %>.jpg" alt="pet photo" style="height:180px;float:right;">
 
-                <img class="myImg" src="/images/<%= pets.name %>2.jpg" alt="pet photo" style="height:180px;float:right;">
+                <img class="myImg" src="/images/<%= pets.p_name %>2.jpg" alt="pet photo" style="height:180px;float:right;">
 
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
@@ -296,11 +296,11 @@
                     <!-- Modal Caption (Image Text) -->
                     <div id="caption"></div>
                 </div>
-                <p>Name: <%= pets.name %></p>
-                <p>Type: <%= pets.types_of_pet %></p>
-                <p>Gender: <%= pets.gender %></p>
+                <p>Name: <%= pets.p_name %></p>
+                <p>Type: <%= pets.type_of_p %></p>
+                <p>Gender: <%= pets.p_gender %></p>
 
-                <p>Years_old: <%= pets.years_old %></p>
+                <p>Years_old: <%= pets.p_age %></p>
                 <button type="button" class="btn">Click to know more !</button>
                 <hr>
 

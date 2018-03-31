@@ -32,9 +32,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next){
     res.locals.errors = null;
-    res.locals.types_of_pet = null;
-    res.locals.gender = null;
-    res.locals.years_old = null;
+    res.locals.type_of_p = null;
+    res.locals.p_gender = null;
+    res.locals.p_age = null;
+    res.locals.p_description = null;
+    res.locals.district = null;
+    res.locals.country = null;
+    res.locals.zone = null;
     next();
 });
 
@@ -61,7 +65,7 @@ app.get('/profile', function (req, res, data){
     })
 })
 
-app.post('/profile/update', function(req, res){
+app.post('/profile', function(req, res){
     var update ={
         type_of_pet: req.body.type_of_pet,
         p_gender: req.body.p_gender,
@@ -71,12 +75,13 @@ app.post('/profile/update', function(req, res){
         country: req.body.country,
         username: req.body.username,
         p_description: req.body.p_description,
+        password: req.body.password,
     }
     db.pets.save(function (err, docs){
         console.log(docs);
         res.render('profile.ejs' , {
             pets: docs,
-            type_of_pet: update.type_of_pet,
+            type_of_p: update.type_of_pet,
             p_gender: update.p_gender,
             p_age: update.p_age,
             district: update.district,
@@ -84,6 +89,7 @@ app.post('/profile/update', function(req, res){
             country: update.country,
             username: update.username,
             p_description: update.p_description,
+            password: update.password,
         });
     })
 })
@@ -91,7 +97,7 @@ app.post('/profile/update', function(req, res){
 app.get('/search', function(req, res, data){
     db.pets.find(function (err, docs){
         console.log(docs);
-        res.render('search.ejs', {
+    res.render('search.ejs', {
             pets: docs,
         });
     })
@@ -99,17 +105,17 @@ app.get('/search', function(req, res, data){
 
 app.post('/search', function(req, res){
     var search ={
-        types_of_pet: req.body.types_of_pet,
-        gender: req.body.gender,
-        years_old: req.body.years_old,
+        type_of_p: req.body.type_of_p,
+        p_gender: req.body.p_gender,
+        p_age: req.body.p_age,
     }
     db.pets.find(function (err, docs){
         console.log(docs);
         res.render('search.ejs', {
             pets: docs,
-            types_of_pet: search.types_of_pet,
-            gender: search.gender,
-            years_old: search.years_old
+            type_of_p: search.type_of_p,
+            p_gender: search.p_gender,
+            p_age: search.p_age
         });
     })
 });
