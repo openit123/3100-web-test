@@ -6,11 +6,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
-var MongoClient = require('mongodb').MongoClient,format = require('util').format;
-MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
-    if(err){
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
+MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+    if (err) {
         throw err;
-    }else{
+    } else {
         console.log("connected");
     }
     db.close();
@@ -48,10 +48,10 @@ app.get('/', function (req, res) {
         logined = true;
     } else {
         console.log("Session not assign");
-        req.session.sign = true;
-        var ssn = req.session;
-        ssn.email = "wqkrbe@gmail.com";
-        console.log(ssn.email);
+        // req.session.sign = true;
+        // var ssn = req.session;
+        // ssn.email = "wqkrbe@gmail.com";
+        // console.log(ssn.email);
     }
     res.render('index.ejs', {isLogined: logined});
 });
@@ -63,14 +63,14 @@ app.get('/feedback', function (req, res) {
 app.get('/profile', function (req, res) {
     res.render('profile.ejs');
 });
-app.get('/profile', function (req, res, data){
-    db.pets.save(function (err, docs){
+app.get('/profile', function (req, res, data) {
+    db.pets.save(function (err, docs) {
         console.log(docs);
-        res.render('profile.ejs' , {
+        res.render('profile.ejs', {
             pets: docs,
         });
     })
-    db.pets.find(function (err, docs){
+    db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('profile.ejs', {
             pets: docs,
@@ -78,8 +78,8 @@ app.get('/profile', function (req, res, data){
     })
 })
 
-app.post('/profile/update', function(req, res){
-    var update ={
+app.post('/profile/update', function (req, res) {
+    var update = {
         type_of_pet: req.body.type_of_pet,
         p_gender: req.body.p_gender,
         p_age: req.body.p_age,
@@ -89,9 +89,9 @@ app.post('/profile/update', function(req, res){
         username: req.body.username,
         p_description: req.body.p_description,
     }
-    db.pets.save(function (err, docs){
+    db.pets.save(function (err, docs) {
         console.log(docs);
-        res.render('profile.ejs' , {
+        res.render('profile.ejs', {
             pets: docs,
             type_of_pet: update.type_of_pet,
             p_gender: update.p_gender,
@@ -136,8 +136,22 @@ app.post('/search/pets/add', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-    db.find(function (err, docs) {
-    });
+    console.log(req.body.username,
+        req.body.password);
+
+    var MongoClient=require('mongodb').MongoClient;
+
+    // MongoClient.connect("mongodb://192.168.1.51:27017/myfirst",function(err,db){
+    //     db.collection("pets",function(err,collection){
+    //         collection.find({username:"alvin123"}).toArray(function(err,items){
+    //             if(err) throw err;
+    //             console.log(items);
+    //             console.log("We found "+items.length+" results!");
+    //         });
+    //
+    //     });
+    //     db.close(); //關閉連線
+    // });
 });
 
 // catch 404 and forward to error handler

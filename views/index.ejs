@@ -71,8 +71,20 @@
                 <li><a href="#" class="button big fit">Log Out</a></li>
             </ul>
             <% }else{ %>
+
+            <form id="formLogin" action="login" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+            </form>
+
             <ul class="actions vertical">
-                <li><a href="login" class="button big fit">Log In</a></li>
+                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log In</a></li>
             </ul>
             <!--<ul class="actions vertical">-->
             <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
@@ -94,16 +106,23 @@
                 </div>
                 <div class="meta">
                     <time class="published" datetime="2018-03-25">March 23, 2018</time>
-                    <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt=""/></a>
+                    <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg"
+                                                                                      alt=""/></a>
                 </div>
             </header>
-            <iframe width="560" height="315" align="middle" src="https://www.youtube.com/embed/ABoaPWjKsZQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <p>Residents from a Knit and Natter group at Scarbrough Court care home in Cramlington decided to try their hand at knitting something a bit different.
-                The group made jumpers for the newborn lambs at Whitehouse Farm, near Morpeth, Northumberland, to help keep them warm.
-                As well as helping the animals, a visit to the farm for the residents also helped with their health and wellbeing.</p>
+            <iframe width="560" height="315" align="middle" src="https://www.youtube.com/embed/ABoaPWjKsZQ"
+                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <p>Residents from a Knit and Natter group at Scarbrough Court care home in Cramlington decided to try their
+                hand at knitting something a bit different.
+                The group made jumpers for the newborn lambs at Whitehouse Farm, near Morpeth, Northumberland, to help
+                keep them warm.
+                As well as helping the animals, a visit to the farm for the residents also helped with their health and
+                wellbeing.</p>
             <footer>
                 <ul class="actions">
-                    <li><a href="http://www.bbc.com/news/av/uk-england-tyne-43604498/northumberland-care-home-residents-knit-woolly-jumpers-for-lambs?intlink_from_url=http%3A%2F%2Fwww.bbc.com%2Fnews%2Ftopics%2Fclm1wxp533pt%2Fanimals&link_location=live-reporting-map" class="button big">Continue Reading</a></li>
+                    <li>
+                        <a href="http://www.bbc.com/news/av/uk-england-tyne-43604498/northumberland-care-home-residents-knit-woolly-jumpers-for-lambs?intlink_from_url=http%3A%2F%2Fwww.bbc.com%2Fnews%2Ftopics%2Fclm1wxp533pt%2Fanimals&link_location=live-reporting-map"
+                           class="button big">Continue Reading</a></li>
                 </ul>
                 <ul class="stats">
                     <li><a href="#">General</a></li>
@@ -118,7 +137,8 @@
             <header>
                 <div class="title">
                     <h2><a href="#">Cat survives road trip under car bonnet</a></h2>
-                    <p>A cat that crawled under the bonnet of her owner's car has survived a 30-mile (50-km) road trip across County Donegal.</p>
+                    <p>A cat that crawled under the bonnet of her owner's car has survived a 30-mile (50-km) road trip
+                        across County Donegal.</p>
                 </div>
                 <div class="meta">
                     <time class="published" datetime="2018-03-20">March 20, 2018</time>
@@ -126,17 +146,23 @@
                                                                                       alt=""/></a>
                 </div>
             </header>
-            <a href="#" class="image featured" style="height:70%;width:70%;"><img src="https://ichef-1.bbci.co.uk/news/660/cpsprodpb/120E/production/_100622640_img-20180329-wa0000.jpg" alt=""/></a>
-            <p>Five-month-old Nova was discovered by mechanics when her owner dropped the car off at a garage in Letterkenny - an hour's drive from its home in Annagry.
+            <a href="#" class="image featured" style="height:70%;width:70%;"><img
+                        src="https://ichef-1.bbci.co.uk/news/660/cpsprodpb/120E/production/_100622640_img-20180329-wa0000.jpg"
+                        alt=""/></a>
+            <p>Five-month-old Nova was discovered by mechanics when her owner dropped the car off at a garage in
+                Letterkenny - an hour's drive from its home in Annagry.
                 Owner Majella McBride said despite the ordeal, Nova was uninjured and unscathed.
                 "One of the nine lives is definitely gone," she said.
                 "We are all delighted Nova is none the worse for wear," Mrs McBride told BBC News NI.
                 "She's my daughter's cat and she would have murdered me if I had killed the cat."
-                Nova, who had been neutered on Monday, was being kept inside the family home as per the instructions of the vet.
-                "But somehow she was able to get out and I just thought she was hiding up in the shed," said Mrs McBride.</p>
+                Nova, who had been neutered on Monday, was being kept inside the family home as per the instructions of
+                the vet.
+                "But somehow she was able to get out and I just thought she was hiding up in the shed," said Mrs
+                McBride.</p>
             <footer>
                 <ul class="actions">
-                    <li><a href="http://www.bbc.com/news/uk-northern-ireland-foyle-west-43585644" class="button big">Continue Reading</a></li>
+                    <li><a href="http://www.bbc.com/news/uk-northern-ireland-foyle-west-43585644" class="button big">Continue
+                            Reading</a></li>
                 </ul>
                 <ul class="stats">
                     <li><a href="#">General</a></li>
@@ -151,7 +177,8 @@
             <header>
                 <div class="title">
                     <h2><a href="#">How to Add Years to Your Pet's Life</a></h2>
-                    <p>Anyone who has ever had a dog or cat wishes just one thing — that he or she has a healthy and long life. Here are five tips that can help your pet do just that.</p>
+                    <p>Anyone who has ever had a dog or cat wishes just one thing — that he or she has a healthy and
+                        long life. Here are five tips that can help your pet do just that.</p>
                 </div>
                 <div class="meta">
                     <time class="published" datetime="2017-11-22">November 22, 2017</time>
@@ -159,13 +186,16 @@
                                                                                       alt=""/></a>
                 </div>
             </header>
-            <a href="#" class="image featured" style="height:50%;width:50%;"><img src="https://www.petmd.com/sites/default/files/dog-kiss-shutterstock_94004587.jpg" alt=""/></a>
+            <a href="#" class="image featured" style="height:50%;width:50%;"><img
+                        src="https://www.petmd.com/sites/default/files/dog-kiss-shutterstock_94004587.jpg" alt=""/></a>
             <p>Pets fed a high quality diet have a shiny hair coat, healthy skin, and bright eyes.
-                A good diet can help strengthen your pet’s immune system, help maintain his or her intestinal health, help increase his or her mental acuity,
+                A good diet can help strengthen your pet’s immune system, help maintain his or her intestinal health,
+                help increase his or her mental acuity,
                 help keep joints and muscles healthy, and much more...</p>
             <footer>
                 <ul class="actions">
-                    <li><a href="https://www.petmd.com/dog/care/evr_multi_life-lengthening_pet_health_tips" class="button big">Continue Reading</a></li>
+                    <li><a href="https://www.petmd.com/dog/care/evr_multi_life-lengthening_pet_health_tips"
+                           class="button big">Continue Reading</a></li>
                 </ul>
                 <ul class="stats">
                     <li><a href="#">General</a></li>
@@ -185,134 +215,29 @@
 
     <!-- Sidebar -->
     <section id="sidebar">
-
-        <!-- Intro -->
-        <section id="intro">
-            <a href="#" class="logo"><img src="images/logo.jpg" alt=""/></a>
-            <header>
-                <h2>Future Imperfect</h2>
-                <p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
-            </header>
-        </section>
-
-        <!-- Mini Posts -->
-        <section>
-            <div class="mini-posts">
-
-                <!-- Mini Post -->
-                <article class="mini-post">
-                    <header>
-                        <h3><a href="#">Vitae sed condimentum</a></h3>
-                        <time class="published" datetime="2015-10-20">October 20, 2015</time>
-                        <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic04.jpg" alt=""/></a>
-                </article>
-
-                <!-- Mini Post -->
-                <article class="mini-post">
-                    <header>
-                        <h3><a href="#">Rutrum neque accumsan</a></h3>
-                        <time class="published" datetime="2015-10-19">October 19, 2015</time>
-                        <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic05.jpg" alt=""/></a>
-                </article>
-
-                <!-- Mini Post -->
-                <article class="mini-post">
-                    <header>
-                        <h3><a href="#">Odio congue mattis</a></h3>
-                        <time class="published" datetime="2015-10-18">October 18, 2015</time>
-                        <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic06.jpg" alt=""/></a>
-                </article>
-
-                <!-- Mini Post -->
-                <article class="mini-post">
-                    <header>
-                        <h3><a href="#">Enim nisl veroeros</a></h3>
-                        <time class="published" datetime="2015-10-17">October 17, 2015</time>
-                        <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
-                    </header>
-                    <a href="#" class="image"><img src="images/pic07.jpg" alt=""/></a>
-                </article>
-
-            </div>
-        </section>
-
-        <!-- Posts List -->
-        <section>
-            <ul class="posts">
-                <li>
-                    <article>
-                        <header>
-                            <h3><a href="#">Lorem ipsum fermentum ut nisl vitae</a></h3>
-                            <time class="published" datetime="2015-10-20">October 20, 2015</time>
-                        </header>
-                        <a href="#" class="image"><img src="images/pic08.jpg" alt=""/></a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <header>
-                            <h3><a href="#">Convallis maximus nisl mattis nunc id lorem</a></h3>
-                            <time class="published" datetime="2015-10-15">October 15, 2015</time>
-                        </header>
-                        <a href="#" class="image"><img src="images/pic09.jpg" alt=""/></a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <header>
-                            <h3><a href="#">Euismod amet placerat vivamus porttitor</a></h3>
-                            <time class="published" datetime="2015-10-10">October 10, 2015</time>
-                        </header>
-                        <a href="#" class="image"><img src="images/pic10.jpg" alt=""/></a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <header>
-                            <h3><a href="#">Magna enim accumsan tortor cursus ultricies</a></h3>
-                            <time class="published" datetime="2015-10-08">October 8, 2015</time>
-                        </header>
-                        <a href="#" class="image"><img src="images/pic11.jpg" alt=""/></a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <header>
-                            <h3><a href="#">Congue ullam corper lorem ipsum dolor</a></h3>
-                            <time class="published" datetime="2015-10-06">October 7, 2015</time>
-                        </header>
-                        <a href="#" class="image"><img src="images/pic12.jpg" alt=""/></a>
-                    </article>
-                </li>
-            </ul>
-        </section>
-
         <!-- About -->
         <section class="blurb">
             <h2>About</h2>
             <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet
                 placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
-            <ul class="actions">
-                <li><a href="#" class="button">Learn More</a></li>
-            </ul>
+            <!--<ul class="actions">-->
+            <!--<li><a href="#" class="button">Learn More</a></li>-->
+            <!--</ul>-->
         </section>
 
         <!-- Footer -->
         <section id="footer">
             <ul class="icons">
-                <li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://twitter.com/?lang=zh-tw" class="fa-twitter"><span class="label">Twitter</span></a>
+                </li>
+                <li><a href="https://zh-hk.facebook.com/" class="fa-facebook"><span class="label">Facebook</span></a>
+                </li>
+                <li><a href="https://www.instagram.com/" class="fa-instagram"><span class="label">Instagram</span></a>
+                </li>
                 <li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
                 <li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
             </ul>
-            <p class="copyright">&copy; </p>
+            <p class="copyright">&copy;CSCI3100 - 2017 - 2018</p>
         </section>
 
     </section>
@@ -335,6 +260,11 @@
 <!--[if lte IE 8]>
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
+<script>
+    function login(){
+        var x = document.getElementById("startLogin");
 
+    }
+</script>
 </body>
 </html>
