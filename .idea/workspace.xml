@@ -21,8 +21,8 @@
       <file leaf-file-name="profile.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/profile.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3124">
-              <caret line="200" column="48" lean-forward="false" selection-start-line="200" selection-start-column="48" selection-end-line="200" selection-end-column="48" />
+            <state relative-caret-position="199">
+              <caret line="100" column="53" lean-forward="false" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -31,18 +31,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="83" column="40" lean-forward="false" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search.ejs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/search.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="271" column="54" lean-forward="false" selection-start-line="271" selection-start-column="48" selection-end-line="271" selection-end-column="54" />
+            <state relative-caret-position="1975">
+              <caret line="108" column="39" lean-forward="false" selection-start-line="108" selection-start-column="39" selection-end-line="108" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -51,8 +41,18 @@
       <file leaf-file-name="feedback.ejs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/feedback.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="87" selection-end-column="18" />
+            <state relative-caret-position="-325">
+              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="92" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search.ejs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/search.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="233">
+              <caret line="298" column="27" lean-forward="false" selection-start-line="298" selection-start-column="26" selection-end-line="298" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -69,13 +69,15 @@
       <find>years_old</find>
       <find>passw</find>
       <find>username</find>
-      <find>body</find>
       <find>country</find>
       <find>pass</find>
       <find>emailaddr</find>
       <find>sch</find>
       <find>f_name</find>
       <find>filter</find>
+      <find>pets</find>
+      <find>%</find>
+      <find>body</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,7 +181,7 @@
       <workItem from="1522480953253" duration="3768000" />
       <workItem from="1522490945970" duration="2214000" />
       <workItem from="1522493179835" duration="3644000" />
-      <workItem from="1522504399860" duration="6227000" />
+      <workItem from="1522504399860" duration="13841000" />
     </task>
     <task id="LOCAL-00001" summary="db query added copy and paste work only!">
       <created>1522491951283</created>
@@ -195,11 +197,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522505554154</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="i am lost -alvin">
+      <created>1522510787383</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1522510787383</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15853000" />
+    <option name="totallyTimeSpent" value="23467000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -339,32 +348,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/feedback.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="87" selection-end-column="18" />
+        <state relative-caret-position="-325">
+          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="92" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="125" column="74" lean-forward="false" selection-start-line="125" selection-start-column="73" selection-end-line="125" selection-end-column="74" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/search.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="271" column="54" lean-forward="false" selection-start-line="271" selection-start-column="48" selection-end-line="271" selection-end-column="54" />
+        <state relative-caret-position="233">
+          <caret line="298" column="27" lean-forward="false" selection-start-line="298" selection-start-column="26" selection-end-line="298" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/profile.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3124">
-          <caret line="200" column="48" lean-forward="false" selection-start-line="200" selection-start-column="48" selection-end-line="200" selection-end-column="48" />
+        <state relative-caret-position="199">
+          <caret line="100" column="53" lean-forward="false" selection-start-line="100" selection-start-column="53" selection-end-line="100" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="83" column="40" lean-forward="false" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
+        <state relative-caret-position="1975">
+          <caret line="108" column="39" lean-forward="false" selection-start-line="108" selection-start-column="39" selection-end-line="108" selection-end-column="39" />
           <folding />
         </state>
       </provider>
