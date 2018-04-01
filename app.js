@@ -6,15 +6,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
-var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
-    if (err) {
+var MongoClient = require('mongodb').MongoClient,format = require('util').format;
+MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
+    if(err){
         throw err;
     } else {
         console.log("connected");
     }
     db.close();
 });
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -54,17 +57,9 @@ app.get('/feedback', function (req, res) {
     res.render('feedback.ejs');
 });
 
-app.get('/profile', function (req, res) {
-    res.render('profile.ejs');
-});
-app.get('/profile', function (req, res, data) {
-    db.pets.save(function (err, docs) {
-        console.log(docs);
-        res.render('profile.ejs', {
-            pets: docs,
-        });
-    })
-    db.pets.find(function (err, docs) {
+app.get('/profile', function (req, res, data){
+    var username = {username:"alvin123"};
+    db.pets.find(username).toArray(function (err, docs){
         console.log(docs);
         res.render('profile.ejs', {
             pets: docs,
@@ -88,7 +83,10 @@ app.post('/profile', function (req, res) {
     var update = {
         $set:
             {
-                type_of_pet: req.body.type_of_pet,
+                f_name: req.body.f_name,
+                l_name: req.body.l_name,
+                p_name: req.body.p_name,
+                type_of_p: req.body.type_of_p,
                 p_gender: req.body.p_gender,
                 p_age: req.body.p_age,
                 district: req.body.district,
@@ -97,6 +95,7 @@ app.post('/profile', function (req, res) {
                 username: req.body.username,
                 p_description: req.body.p_description,
                 password: req.body.password,
+                emailaddr: req.body.emailaddr
             }
     }
     db.pets.save(function (err, docs) {
@@ -115,6 +114,24 @@ app.post('/profile', function (req, res) {
                 p_description: update.p_description,
                 password: update.password
             });
+    var user = {username: req.body.username};
+    db.pets.update(user, update, function (err, docs){
+        console.log(docs);
+        res.render('profile.ejs' , {
+            pets: docs,
+            f_name: update.f_name,
+            l_name: update.l_name,
+            p_name: update.p_name,
+            type_of_p: update.type_of_p,
+            p_gender: update.p_gender,
+            p_age: update.p_age,
+            district: update.district,
+            zone: update.zone,
+            country: update.country,
+            username: update.username,
+            p_description: update.p_description,
+            password: update.password,
+            emailaddr: update.emailaddr
         });
     });
 });
