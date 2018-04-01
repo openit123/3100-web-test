@@ -34,9 +34,9 @@ app.use(session({
 }));
 app.use(function (req, res, next) {
     res.locals.errors = null;
-    res.locals.types_of_pet = null;
-    res.locals.gender = null;
-    res.locals.years_old = null;
+    res.locals.type_of_p = null;
+    res.locals.p_gender = null;
+    res.locals.p_age = null;
     next();
 });
 
@@ -186,39 +186,24 @@ app.post('/signup', function (req, res) {
 
 });
 
-app.post('/search', function (req, res) {
-
+app.post('/search', function(req, res){
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
 
-    var search = {
-        types_of_pet: req.body.types_of_pet,
-        gender: req.body.gender,
-        years_old: req.body.years_old,
-    };
-    db.pets.find(function (err, docs) {
-        app.post('/search', function (req, res) {
-            var search = {
-                type_of_p: req.body.type_of_p,
-                p_gender: req.body.p_gender,
-                p_age: req.body.p_age,
-            }
-            db.pets.find(function (err, docs) {
-                console.log(docs);
-                res.render('search.ejs', {
-                    pets: docs,
-                    type_of_p: search.type_of_p,
-                    p_gender: search.p_gender,
-                    p_age: search.p_age
-                });
-            })
+    db.pets.find(function (err, docs){
+        console.log(docs);
+        res.render('search.ejs', {
+            isLogined: logined,
+            pets: docs,
+            type_of_p: req.body.type_of_p,
+            p_gender: req.body.p_gender,
+            p_age: req.body.p_age
         });
     })
 });
-
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);

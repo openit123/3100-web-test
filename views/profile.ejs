@@ -66,12 +66,26 @@
         <!-- Actions -->
         <section>
             <% if(isLogined){ %>
-            <ul class="actions vertical">
-                <li><a href="#" class="button big fit">Log Out</a></li>
-            </ul>
+            <form id="formLogout" action="logout" method="post">
+                <ul class="actions vertical">
+                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a></li>
+                </ul>
+            </form>
             <% }else{ %>
+
+            <form id="formLogin" action="login" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+            </form>
+
             <ul class="actions vertical">
-                <li><a href="login" class="button big fit">Log In</a></li>
+                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log In</a></li>
             </ul>
             <!--<ul class="actions vertical">-->
             <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
@@ -107,6 +121,7 @@
                 <label for="passwd">Password</label>
                 <input type="password" name="password" class="form-control" id="passwd"
                        value="<%=pets.password%>" placeholder="Password">
+                <input type="checkbox" onclick="myFunction()">Show Password
             </div>
 
             <div class="form-row">
@@ -195,9 +210,18 @@
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label for="p_type">Type of pet</label>
-                    <input type="text" name="type_of_p" class="form-control" id="p_type" placeholder="Type of pet"
-                           value="<%=pets.type_of_p%>" required>
+                    <label for="type_of_p">Type of pet</label>
+                    <% if (pets.type_of_p == "dog"){%>
+                    <select name="type_of_p" class="form-control" id="type_of_p" required>
+                        <option name="type_of_p" id="dog" value ="dog" selected="selected">Dog</option>
+                        <option name="type_of_p" id="cat" value = "cat">Cat</option>
+                    </select>
+                    <% } else if(pets.type_of_p == "cat"){%>
+                    <select name="type_of_p" class="form-control" id="type_of_p" required>
+                        <option name="type_of_p" id="dog" value ="dog">Dog</option>
+                        <option name="type_of_p" id="cat" value = "cat" selected="selected">Cat</option>
+                    </select>
+                    <% }%>
                     <div class="invalid-feedback">
                         Please provide your pet's type.
                     </div>
@@ -242,6 +266,15 @@
         }
     }
     <%});%>
+
+    function myFunction() {
+        var x = document.getElementById("passwd");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
 </script>
 
 <!-- Scripts -->
