@@ -23,15 +23,15 @@
         <h1><a href="/">Animal Tinder</a></h1>
         <nav class="links">
             <ul>
-                <!--sign in only show when user not login-->
-                <li><a href="/signin">Sign in</a></li>
-                <!--below function need to be login to show-->
-                <!--use session to check whether it is login or not-->
+                <% if(isLogined){ %>
                 <li><a href="/profile">profile</a></li>
                 <li><a href="/search">matching</a></li>
                 <li><a href="/feedback">feedback</a></li>
                 <li><a href="#">useful link</a></li>
                 <li><a href="#">about us</a></li>
+                <% }else{ %>
+                <li><a href="/signin">Sign in</a></li>
+                <% } %>
             </ul>
         </nav>
         <nav class="main">
@@ -65,15 +65,18 @@
 
         <!-- Actions -->
         <section>
-            <ul class="actions vertical">
-                <li><a href="#" class="button big fit">Log In</a></li>
-            </ul>
+            <% if(isLogined){ %>
             <ul class="actions vertical">
                 <li><a href="#" class="button big fit">Log Out</a></li>
+            </ul>
+            <% }else{ %>
+            <ul class="actions vertical">
+                <li><a href="login" class="button big fit">Log In</a></li>
             </ul>
             <!--<ul class="actions vertical">-->
             <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
             <!--</ul>-->
+            <% } %>
         </section>
 
     </section>
