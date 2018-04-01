@@ -56,7 +56,7 @@
             z-index: 1; /* Sit on top */
             padding-top: 100px; /* Location of the box */
             left: 0;
-            top: 0;
+            top: 40px;
             width: 100%; /* Full width */
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
@@ -211,6 +211,7 @@
 </head>
 <body>
 <div id="wrapper">
+    <!-- Header -->
     <header id="header">
         <h1><a href="/">Animal Tinder</a></h1>
         <nav class="links">
@@ -240,6 +241,53 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Menu -->
+    <section id="menu">
+        <!-- Links -->
+        <section>
+            <ul class="links">
+                <li>
+                    <a href="#">
+                        <h3>Sample</h3>
+                        <p>Sample Test</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Actions -->
+        <section>
+            <% if(isLogined){ %>
+            <form id="formLogout" action="logout" method="post">
+                <ul class="actions vertical">
+                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a></li>
+                </ul>
+            </form>
+            <% }else{ %>
+
+            <form id="formLogin" action="login" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+            </form>
+
+            <ul class="actions vertical">
+                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log In</a></li>
+            </ul>
+            <!--<ul class="actions vertical">-->
+            <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
+            <!--</ul>-->
+            <% } %>
+        </section>
+
+    </section>
+
 
     <div id="main">
         <h6>Searching and Matching</h6>
