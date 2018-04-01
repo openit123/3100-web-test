@@ -6,19 +6,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
-var MongoClient = require('mongodb').MongoClient,format = require('util').format;
-MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
-    if(err){
-        throw err;
-    } else {
-        console.log("connected");
-    }
-    db.close();
-});
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
+// MongoClient.connect('mongodb://127.0.0.1:27017', function (err, db) {
+//     if (err) {
+//         throw err;
+//     } else {
+//         console.log("connected");
+//     }
+//     db.close();
+// });
 var app = express();
 
 // view engine setup
@@ -57,15 +53,15 @@ app.get('/feedback', function (req, res) {
     res.render('feedback.ejs');
 });
 
-app.get('/profile', function (req, res, data){
-    var username = {username:"alvin123"};
-    db.pets.find(username).toArray(function (err, docs){
+app.get('/profile', function (req, res, data) {
+    var username = {username: "alvin123"};
+    db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
         res.render('profile.ejs', {
             pets: docs,
         });
     })
-})
+});
 
 app.post('/profile/update', function (req, res) {
     var update = {
@@ -79,6 +75,7 @@ app.post('/profile/update', function (req, res) {
         p_description: req.body.p_description
     }
 });
+
 app.post('/profile', function (req, res) {
     var update = {
         $set:
@@ -97,7 +94,7 @@ app.post('/profile', function (req, res) {
                 password: req.body.password,
                 emailaddr: req.body.emailaddr
             }
-    }
+    };
     db.pets.save(function (err, docs) {
         var alvin123 = {username: req.body.username};
         db.pets.updateOne(alvin123, update, function (err, docs) {
@@ -114,24 +111,26 @@ app.post('/profile', function (req, res) {
                 p_description: update.p_description,
                 password: update.password
             });
-    var user = {username: req.body.username};
-    db.pets.update(user, update, function (err, docs){
-        console.log(docs);
-        res.render('profile.ejs' , {
-            pets: docs,
-            f_name: update.f_name,
-            l_name: update.l_name,
-            p_name: update.p_name,
-            type_of_p: update.type_of_p,
-            p_gender: update.p_gender,
-            p_age: update.p_age,
-            district: update.district,
-            zone: update.zone,
-            country: update.country,
-            username: update.username,
-            p_description: update.p_description,
-            password: update.password,
-            emailaddr: update.emailaddr
+            var user = {username: req.body.username};
+            db.pets.update(user, update, function (err, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    pets: docs,
+                    f_name: update.f_name,
+                    l_name: update.l_name,
+                    p_name: update.p_name,
+                    type_of_p: update.type_of_p,
+                    p_gender: update.p_gender,
+                    p_age: update.p_age,
+                    district: update.district,
+                    zone: update.zone,
+                    country: update.country,
+                    username: update.username,
+                    p_description: update.p_description,
+                    password: update.password,
+                    emailaddr: update.emailaddr
+                });
+            });
         });
     });
 });
@@ -195,10 +194,10 @@ app.post('/login', function (req, res) {
                 console.log("Login Fail");
             } else {
                 console.log("Login Success");
-                if(req.session.sign){
+                if (req.session.sign) {
                     console.log(req.session);
                     logined = true;
-                }else{
+                } else {
                     console.log("session not assign");
                     req.session.sign = true;
                     console.log(req.session);
@@ -211,7 +210,7 @@ app.post('/login', function (req, res) {
     });
 });
 
-app.post('/logout',function(req,res){
+app.post('/logout', function (req, res) {
     console.log(req.session.username);
     req.session.destroy();
     res.redirect("/");
