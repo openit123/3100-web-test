@@ -6,18 +6,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
-var MongoClient = require('mongodb').MongoClient,format = require('util').format;
-MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
-    if(err){
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
+MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+    if (err) {
         throw err;
-    }else{
+    } else {
         console.log("connected");
     }
     db.close();
 });
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -49,12 +46,6 @@ app.get('/', function (req, res) {
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
-    } else {
-        console.log("Session not assign");
-        // req.session.sign = true;
-        // var ssn = req.session;
-        // ssn.email = "wqkrbe@gmail.com";
-        // console.log(ssn.email);
     }
     res.render('index.ejs', {isLogined: logined});
 });
@@ -90,9 +81,12 @@ app.post('/profile/update', function (req, res) {
         zone: req.body.zone,
         country: req.body.country,
         username: req.body.username,
-        p_description: req.body.p_description,
-app.post('/profile', function(req, res){
-    var update ={ $set:
+        p_description: req.body.p_description
+    }
+});
+app.post('/profile', function (req, res) {
+    var update = {
+        $set:
             {
                 type_of_pet: req.body.type_of_pet,
                 p_gender: req.body.p_gender,
@@ -106,28 +100,29 @@ app.post('/profile', function(req, res){
             }
     }
     db.pets.save(function (err, docs) {
-    var alvin123 = {username: req.body.username};
-    db.pets.updateOne(alvin123, update, function (err, docs){
-        console.log(docs);
-        res.render('profile.ejs', {
-            pets: docs,
-            type_of_p: update.type_of_pet,
-            p_gender: update.p_gender,
-            p_age: update.p_age,
-            district: update.district,
-            zone: update.zone,
-            country: update.country,
-            username: update.username,
-            p_description: update.p_description,
-            password: update.password
+        var alvin123 = {username: req.body.username};
+        db.pets.updateOne(alvin123, update, function (err, docs) {
+            console.log(docs);
+            res.render('profile.ejs', {
+                pets: docs,
+                type_of_p: update.type_of_pet,
+                p_gender: update.p_gender,
+                p_age: update.p_age,
+                district: update.district,
+                zone: update.zone,
+                country: update.country,
+                username: update.username,
+                p_description: update.p_description,
+                password: update.password
+            });
         });
-    })
-})
+    });
+});
 
 app.get('/search', function (req, res, data) {
     db.pets.find(function (err, docs) {
         console.log(docs);
-    res.render('search.ejs', {
+        res.render('search.ejs', {
             pets: docs,
         });
     })
@@ -144,19 +139,21 @@ app.post('/search/pets/add', function (req, res) {
         years_old: req.body.years_old,
     };
     db.pets.find(function (err, docs) {
-app.post('/search', function(req, res){
-    var search ={
-        type_of_p: req.body.type_of_p,
-        p_gender: req.body.p_gender,
-        p_age: req.body.p_age,
-    }
-    db.pets.find(function (err, docs){
-        console.log(docs);
-        res.render('search.ejs', {
-            pets: docs,
-            type_of_p: search.type_of_p,
-            p_gender: search.p_gender,
-            p_age: search.p_age
+        app.post('/search', function (req, res) {
+            var search = {
+                type_of_p: req.body.type_of_p,
+                p_gender: req.body.p_gender,
+                p_age: req.body.p_age,
+            }
+            db.pets.find(function (err, docs) {
+                console.log(docs);
+                res.render('search.ejs', {
+                    pets: docs,
+                    type_of_p: search.type_of_p,
+                    p_gender: search.p_gender,
+                    p_age: search.p_age
+                });
+            })
         });
     })
 });
@@ -164,20 +161,43 @@ app.post('/search', function(req, res){
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
+    var url = "mongodb://192.168.1.51:27017/";
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        dbo.collection("pets").find({
+            username: req.body.username,
+            password: req.body.password
+        }).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            console.log(result.length);
+            db.close();
+            var logined = false;
+            if (result == null || result.length != 1) {
+                console.log("Login Fail");
+            } else {
+                console.log("Login Success");
+                if(req.session.sign){
+                    console.log(req.session);
+                    logined = true;
+                }else{
+                    console.log("session not assign");
+                    req.session.sign = true;
+                    console.log(req.session);
+                    req.session.username = result[0].username;
+                    console.log(req.session.username);
+                    res.redirect("/");
+                }
+            }
+        });
+    });
+});
 
-    var MongoClient=require('mongodb').MongoClient;
-
-    // MongoClient.connect("mongodb://192.168.1.51:27017/myfirst",function(err,db){
-    //     db.collection("pets",function(err,collection){
-    //         collection.find({username:"alvin123"}).toArray(function(err,items){
-    //             if(err) throw err;
-    //             console.log(items);
-    //             console.log("We found "+items.length+" results!");
-    //         });
-    //
-    //     });
-    //     db.close(); //關閉連線
-    // });
+app.post('/logout',function(req,res){
+    console.log(req.session.username);
+    req.session.destroy();
+    res.redirect("/");
 });
 
 // catch 404 and forward to error handler

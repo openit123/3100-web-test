@@ -67,9 +67,11 @@
         <!-- Actions -->
         <section>
             <% if(isLogined){ %>
+            <form id="formLogout" action="logout" method="post">
             <ul class="actions vertical">
-                <li><a href="#" class="button big fit">Log Out</a></li>
+                <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a></li>
             </ul>
+            </form>
             <% }else{ %>
 
             <form id="formLogin" action="login" method="post">
