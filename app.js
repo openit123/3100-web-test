@@ -53,20 +53,10 @@ app.get('/feedback', function (req, res) {
 
 app.get('/profile', function (req, res, data){
     var username = {username:"alvin123"};
-    var info = [];
-    db.pets.update(function (err, docs){
-       // console.log(docs);
-        res.render('profile.ejs' , {
-            pets: docs,
-        });
-    })
-    db.pets.find(username, function (err, info, docs){
-       // console.log(docs);
-        info.push(info);
-        console.log(info);
+    db.pets.find(username).toArray(function (err, docs){
+        console.log(docs);
         res.render('profile.ejs', {
             pets: docs,
-            info: info,
         });
     })
 })
