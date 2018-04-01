@@ -49,6 +49,15 @@ app.get('/', function (req, res) {
     res.render('index.ejs', {isLogined: logined});
 });
 
+app.get('/contact', function (req,res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('contact.ejs', {isLogined: logined});
+});
+
 app.get('/feedback', function (req, res) {
     var logined = false;
     if (req.session.sign) {
@@ -131,7 +140,7 @@ app.get('/search', function (req, res, data) {
     })
 });
 
-app.get('/signin', function (req, res) {
+app.get('/signup', function (req, res) {
 
     var logined = false;
     if (req.session.sign) {
@@ -139,15 +148,16 @@ app.get('/signin', function (req, res) {
         logined = true;
     }
 
-    res.render('signin.ejs',{isLogined:logined});
+    res.render('signup.ejs',{isLogined:logined});
 });
 
-app.post('/signin', function (req, res) {
+app.post('/signup', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
+    var user = {username: req.body.username};
     var insert = {
         username: req.body.username,
         password: req.body.password,
@@ -158,12 +168,23 @@ app.post('/signin', function (req, res) {
         district: req.body.district,
         zone: req.body.zone,
     };
-    db.pets.insert(insert, function(err, docs){
-        console.log("created");
-        res.render('signin.ejs',{isLogined:logined});
-    });
+    db.pets.find(user).toArray(function(err, result){
+        if (err)
+            throw err;
+        console.log(result);
+        console.log(result.length);
+        if (result.length == 0){
+            db.pets.insert(insert, function(err, docs){
+                console.log("created");
+                res.render('signup.ejs',{isLogined:logined});
+            });
+        }
+        else{
+            res.redirect("/signup");
+        }
+    })
 
-})
+});
 
 app.post('/search', function (req, res) {
 
