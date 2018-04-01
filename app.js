@@ -7,14 +7,14 @@ var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
-    if (err) {
-        throw err;
-    } else {
-        console.log("connected");
-    }
-    db.close();
-});
+//MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+//    if (err) {
+//        throw err;
+//    } else {
+//        console.log("connected");
+//    }
+//    db.close();
+//});
 var app = express();
 
 // view engine setup
@@ -66,26 +66,13 @@ app.get('/profile', function (req, res, data) {
         logined = true;
     }
 
-    var username = {username: "alvin123"};
+    var username = {username: req.session.username};
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
         res.render('profile.ejs', {isLogined: logined,
             pets: docs,
         });
-    })
-});
-
-app.post('/profile/update', function (req, res) {
-    var update = {
-        type_of_pet: req.body.type_of_pet,
-        p_gender: req.body.p_gender,
-        p_age: req.body.p_age,
-        district: req.body.district,
-        zone: req.body.zone,
-        country: req.body.country,
-        username: req.body.username,
-        p_description: req.body.p_description
-    }
+    });
 });
 
 app.post('/profile', function (req, res) {
@@ -114,45 +101,16 @@ app.post('/profile', function (req, res) {
                 emailaddr: req.body.emailaddr
             }
     };
-    db.pets.save(function (err, docs) {
-        var alvin123 = {username: req.body.username};
-        db.pets.updateOne(alvin123, update, function (err, docs) {
-            console.log(docs);
-            res.render('profile.ejs', {
-                isLogined:logined,
-                pets: docs,
-                type_of_p: update.type_of_pet,
-                p_gender: update.p_gender,
-                p_age: update.p_age,
-                district: update.district,
-                zone: update.zone,
-                country: update.country,
-                username: update.username,
-                p_description: update.p_description,
-                password: update.password
-            });
-            var user = {username: req.body.username};
-            db.pets.update(user, update, function (err, docs) {
-                console.log(docs);
-                res.render('profile.ejs', {
-                    isLogined: logined,
-                    pets: docs,
-                    f_name: update.f_name,
-                    l_name: update.l_name,
-                    p_name: update.p_name,
-                    type_of_p: update.type_of_p,
-                    p_gender: update.p_gender,
-                    p_age: update.p_age,
-                    district: update.district,
-                    zone: update.zone,
-                    country: update.country,
-                    username: update.username,
-                    p_description: update.p_description,
-                    password: update.password,
-                    emailaddr: update.emailaddr
-                });
+    var user = {username: req.body.username};
+    db.pets.update(user, update, function (err, docs) {
+        console.log(docs);
+        db.pets.find(user).toArray(function (err, result) {
+            console.log(result);
+            res.render('profile.ejs', {isLogined: logined,
+                pets: result,
             });
         });
+
     });
 });
 
@@ -184,7 +142,30 @@ app.get('/signin', function (req, res) {
     res.render('signin.ejs',{isLogined:logined});
 });
 
-app.post('/search/pets/add', function (req, res) {
+app.post('/signin', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    var insert = {
+        username: req.body.username,
+        password: req.body.password,
+        emailaddr: req.body.emailaddr,
+        f_name: req.body.f_name,
+        l_name: req.body.l_name,
+        country: req.body.country,
+        district: req.body.district,
+        zone: req.body.zone,
+    };
+    db.pets.insert(insert, function(err, docs){
+        console.log("created");
+        res.render('signin.ejs',{isLogined:logined});
+    });
+
+})
+
+app.post('/search', function (req, res) {
 
     var logined = false;
     if (req.session.sign) {
@@ -220,7 +201,7 @@ app.post('/search/pets/add', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -235,6 +216,7 @@ app.post('/login', function (req, res) {
             var logined = false;
             if (result == null || result.length != 1) {
                 console.log("Login Fail");
+                res.redirect("/");
             } else {
                 console.log("Login Success");
                 if (req.session.sign) {

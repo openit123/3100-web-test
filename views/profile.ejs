@@ -83,8 +83,8 @@
 
     <!-- Main -->
     <div id="main">
+        <%pets.forEach(function(pets){%>
         <form method = "POST" action="/profile">
-
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -101,26 +101,27 @@
             <div class="form-group">
                 <label for="emailaddr">Email address</label>
                 <input type="email" name="emailaddr" class="form-control" id="emailaddr" aria-describedby="emailHelp"
-                       placeholder="Enter email">
+                       placeholder="Enter email" value="<%=pets.emailaddr%>">
             </div>
             <div class="form-group">
                 <label for="passwd">Password</label>
-                <input type="password" name="password" class="form-control" id="passwd" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="passwd"
+                       value="<%=pets.password%>" placeholder="Password">
             </div>
 
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="f_name">First name</label>
                     <input type="text" name="f_name" class="form-control" id="f_name" placeholder="First name"
-                           value="Mark" required>
+                           value="<%=pets.f_name%>" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="l_name">Last name</label>
-                    <input type="text" name="l_name" class="form-control" id="l_name" placeholder="Last name" value="Otto"
-                           required>
+                    <input type="text" name="l_name" class="form-control" id="l_name" placeholder="Last name"
+                           value="<%=pets.l_name%>" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -132,7 +133,7 @@
                             <span class="input-group-text" id="inputGroupPrepend">#</span>
                         </div>
                         <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="Username"
-                               aria-describedby="inputGroupPrepend" value="alvin123" readonly required>
+                               aria-describedby="inputGroupPrepend" value="<%=pets.username%>"readonly required>
                         <div class="invalid-feedback">
                             Please choose a username.
                         </div>
@@ -142,21 +143,24 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="country">Country</label>
-                    <input type="text" name="country" class="form-control" id="country" placeholder="Country" required>
+                    <input type="text" name="country" class="form-control" id="country" placeholder="Country"
+                           value="<%=pets.country%>"required>
                     <div class="invalid-feedback">
                         Please provide a valid Country.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="district">District</label>
-                    <input type="text" name="district" class="form-control" id="district" placeholder="District" required>
+                    <input type="text" name="district" class="form-control" id="district" placeholder="District"
+                           value="<%=pets.district%>" required>
                     <div class="invalid-feedback">
                         Please provide a valid District.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="zone">Zone</label>
-                    <input type="text" name="zone" class="form-control" id="zone" placeholder="Zone" required>
+                    <input type="text" name="zone" class="form-control" id="zone" placeholder="Zone"
+                           value="<%=pets.zone%>" required>
                     <div class="invalid-feedback">
                         Please provide a valid Zone.
                     </div>
@@ -165,14 +169,16 @@
             <div class = "form-row">
                 <div class="col-md-3 mb-3">
                     <label for="p_name">Pet's name</label>
-                    <input type="text" name="p_name" class="form-control" id="p_name" placeholder="Pet's name" required>
+                    <input type="text" name="p_name" class="form-control" id="p_name" placeholder="Pet's name"
+                           value="<%=pets.p_name%>" required>
                     <div class="invalid-feedback">
                         Please tell us your pet's name.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                         <label for="p_age">Pet's age</label>
-                        <input type="text" name="p_age" class="form-control" id="p_age" placeholder="Pet's age" required>
+                        <input type="text" name="p_age" class="form-control" id="p_age" placeholder="Pet's age"
+                               value="<%=pets.p_age%>" required>
                         <div class="invalid-feedback">
                             Please tell us your pet's age.
                         </div>
@@ -180,9 +186,9 @@
                 <div class="col-md-3 mb-3">
                     <label for="p_gender">Pet's gender</label>
                     <select name="p_gender" class="form-control" id="p_gender" required>
-                        <option selected="true" disabled="disabled">Please select</option>
-                        <option name="p_gender" value ="m">M</option>
-                        <option name="p_gender" value = "f">F</option>
+                        <option id="undefined" disabled="disabled">Please select</option>
+                        <option name="p_gender" id="m" value ="m">M</option>
+                        <option name="p_gender" id="f" value = "f">F</option>
                     </select>
                     <div class="invalid-feedback">
                         Please tell us your pet's gender.
@@ -190,7 +196,8 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="p_type">Type of pet</label>
-                    <input type="text" name="type_of_p" class="form-control" id="p_type" placeholder="Type of pet" required>
+                    <input type="text" name="type_of_p" class="form-control" id="p_type" placeholder="Type of pet"
+                           value="<%=pets.type_of_p%>" required>
                     <div class="invalid-feedback">
                         Please provide your pet's type.
                     </div>
@@ -198,7 +205,8 @@
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Pet's description</label>
-                <textarea name="p_description" class="form-control" id="p_description" rows="8"></textarea>
+                <textarea name="p_description" class="form-control" id="p_description" rows="8"><%=pets.p_description%>
+                </textarea>
             </div>
             <div class="alert alert-danger" role="alert" id="fail" style="display: none">
             </div>
@@ -207,17 +215,16 @@
             </div>
             <input type="submit" value="Update">
         </form>
+
     </div>
 
 </div>
 
 <script>
-    function Display(){
-
+    function Display() {
     }
-
 </script>
-
+<%});%>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
