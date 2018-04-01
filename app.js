@@ -7,14 +7,14 @@ var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-// MongoClient.connect('mongodb://127.0.0.1:27017', function (err, db) {
-//     if (err) {
-//         throw err;
-//     } else {
-//         console.log("connected");
-//     }
-//     db.close();
-// });
+MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+    if (err) {
+        throw err;
+    } else {
+        console.log("connected");
+    }
+    db.close();
+});
 var app = express();
 
 // view engine setup
@@ -50,14 +50,26 @@ app.get('/', function (req, res) {
 });
 
 app.get('/feedback', function (req, res) {
-    res.render('feedback.ejs');
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('feedback.ejs',{isLogined: logined});
 });
 
 app.get('/profile', function (req, res, data) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
     var username = {username: "alvin123"};
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
-        res.render('profile.ejs', {
+        res.render('profile.ejs', {isLogined: logined,
             pets: docs,
         });
     })
@@ -77,6 +89,13 @@ app.post('/profile/update', function (req, res) {
 });
 
 app.post('/profile', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
     var update = {
         $set:
             {
@@ -100,6 +119,7 @@ app.post('/profile', function (req, res) {
         db.pets.updateOne(alvin123, update, function (err, docs) {
             console.log(docs);
             res.render('profile.ejs', {
+                isLogined:logined,
                 pets: docs,
                 type_of_p: update.type_of_pet,
                 p_gender: update.p_gender,
@@ -115,6 +135,7 @@ app.post('/profile', function (req, res) {
             db.pets.update(user, update, function (err, docs) {
                 console.log(docs);
                 res.render('profile.ejs', {
+                    isLogined: logined,
                     pets: docs,
                     f_name: update.f_name,
                     l_name: update.l_name,
@@ -136,19 +157,41 @@ app.post('/profile', function (req, res) {
 });
 
 app.get('/search', function (req, res, data) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
     db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
+            isLogined: logined,
             pets: docs,
         });
     })
 });
 
 app.get('/signin', function (req, res) {
-    res.render('signin.ejs');
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    res.render('signin.ejs',{isLogined:logined});
 });
 
 app.post('/search/pets/add', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
     var search = {
         types_of_pet: req.body.types_of_pet,
         gender: req.body.gender,
@@ -233,39 +276,6 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-
-/*use these data as testcases!!
-var pets = [
-  {
-    id: 1,
-    name: 'teddy',
-    types_of_pet: 'dog',
-    gender: 'm',
-    years_old: 5
-  },
-  {
-    id: 2,
-    name: 'tommy',
-    types_of_pet: 'cat',
-    gender: 'm',
-    years_old: 2
-  },
-  {
-    id: 3,
-    name: 'cody',
-    types_of_pet: 'dog',
-    gender: 'f',
-    years_old: 2
-  },
-  {
-    id: 4,
-    name: 'jenny',
-    types_of_pet: 'cat',
-    gender: 'f',
-    years_old: 7
-  },
-]
-*/
 
 //add them in db
 //db.pets.insert({"username":"alvin123", "password":"alvin123", "emailaddr":"alvin@ymail.com", "f_name":"Alvin", "l_name":"Luk", "country":"China", "district":"HK", "zone":1, "p_name":"teddy", "p_age":5, "p_gender":"m", "type_of_p":"dog", "p_description":"h"})
