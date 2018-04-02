@@ -334,7 +334,8 @@ app.get('/message', function (req, res) {
         logined = true;
     }
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     var messagesize;
     var allmessage;
     var havemessage;
@@ -369,8 +370,8 @@ app.get('/message', function (req, res) {
 
 app.get('/insertMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -402,8 +403,8 @@ app.get('/map', function (req, res) {
 
 app.get('/deleteMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -416,9 +417,40 @@ app.get('/deleteMessage', function (req, res) {
     });
 });
 
-app.post('/matching', function (req, res) {
+app.post('/sendMessage', function(req, res){
+    var MongoClient = require('mongodb').MongoClient;
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
+    var username = {username: req.session.username};
+
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        var d = new Date();
+        var mins = d.getMinutes();
+        if (mins < 10) {
+            "0" + mins;
+        }
+
+        var generateTime = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "@" + d.getHours() + ":" + mins;
+        var obj = {
+            form: username.username,
+            to: req.body.username,
+            content: "hi my phone number is 12345678",
+            readornot: "0",
+            submittime: generateTime
+        };
+        dbo.collection("messageRecord").insertOne(obj, function (err, result) {
+            if (err) throw err;
+            console.log("success");
+            db.close();
+        });
+    });
+})
+
+app.post('matching', function (req, res) {
     console.log("ajax request");
-    //  res.render('template.ejs');
+    res.render('template.ejs');
 });
 
 app.post('/signup', function (req, res) {
