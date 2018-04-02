@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var multer = require('multer');
+var multer2 = require('multer');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
@@ -27,6 +28,14 @@ const storage = multer.diskStorage({
         cb(null, un + path.extname(file.originalname));
     }
 });
+
+const storage2 = multer2.diskStorage({
+
+    destination: './public/uploads/uncheck',
+    filename: function(req, file, cb){
+        cb(null, un + Date.now() + path.extname(file.originalname));
+    }
+});
 //Init upload
 const upload = multer({
     storage: storage,
@@ -36,8 +45,17 @@ const upload = multer({
     }
 }).single("myImage");
 
+const upload2 = multer2({
+    storage: storage2,
+    limits:{fileSize: 1000000},
+    fileFilter: function(req, file, cb){
+        checkFileType(file, cb);
+    },
+    files: 2
+});
+
 function checkFileType(file, cb){
-    const filetypes = /jpeg|jpg|png|gif/;
+    const filetypes = /jpg/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
     if(mimetype && extname){
@@ -164,6 +182,42 @@ app.post('/upload', function (req, res) {
     })
 })
 
+app.post('/upload2', upload2.any(), function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    upload(req, res, function (err) {
+        if (err) {
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err2, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg2: err,
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
+                });
+            });
+        } else {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg2: "The photo and it will be displayed after checking !",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            }
+
+        // Everything went fine
+    })
+})
+
 app.post('/profile', function (req, res) {
 
     var logined = false;
@@ -256,7 +310,8 @@ app.get('/message', function (req, res) {
 
 app.get('/insertMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -288,8 +343,8 @@ app.get('/map', function (req, res) {
 
 app.get('/deleteMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
-
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -364,7 +419,8 @@ app.post('/search', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
