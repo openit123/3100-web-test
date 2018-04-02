@@ -7,14 +7,14 @@ var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-//MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
-//    if (err) {
-//        throw err;
-//    } else {
-//        console.log("connected");
-//    }
-//    db.close();
-//});
+// MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+//     if (err) {
+//         throw err;
+//     } else {
+//         console.log("connected");
+//     }
+//     db.close();
+// });
 var app = express();
 
 // view engine setup
@@ -49,13 +49,22 @@ app.get('/', function (req, res) {
     res.render('index.ejs', {isLogined: logined});
 });
 
+app.get('/contact', function (req,res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('contact.ejs', {isLogined: logined});
+});
+
 app.get('/feedback', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
-    res.render('feedback.ejs',{isLogined: logined});
+    res.render('feedback.ejs', {isLogined: logined, res: res});
 });
 
 app.get('/profile', function (req, res, data) {
@@ -69,7 +78,9 @@ app.get('/profile', function (req, res, data) {
     var username = {username: req.session.username};
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
-        res.render('profile.ejs', {isLogined: logined,
+        res.render('profile.ejs', {
+            res: res,
+            isLogined: logined,
             pets: docs,
         });
     });
@@ -110,7 +121,6 @@ app.post('/profile', function (req, res) {
                 pets: result,
             });
         });
-
     });
 });
 
@@ -125,13 +135,14 @@ app.get('/search', function (req, res, data) {
     db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
+            res: res,
             isLogined: logined,
             pets: docs,
         });
     })
 });
 
-app.get('/signin', function (req, res) {
+app.get('/signup', function (req, res) {
 
     var logined = false;
     if (req.session.sign) {
@@ -139,15 +150,39 @@ app.get('/signin', function (req, res) {
         logined = true;
     }
 
-    res.render('signin.ejs',{isLogined:logined});
+    res.render('signup.ejs',{isLogined:logined});
 });
 
-app.post('/signin', function (req, res) {
+
+app.get('/matching', function (req, res) {
+
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
+
+    res.render('matching.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/message', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    res.render('message.ejs', {isLogined: logined, res: res});
+});
+
+app.post('/signup', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    var user = {username: req.body.username};
     var insert = {
         username: req.body.username,
         password: req.body.password,
@@ -158,12 +193,23 @@ app.post('/signin', function (req, res) {
         district: req.body.district,
         zone: req.body.zone,
     };
-    db.pets.insert(insert, function(err, docs){
-        console.log("created");
-        res.render('signin.ejs',{isLogined:logined});
-    });
+    db.pets.find(user).toArray(function(err, result){
+        if (err)
+            throw err;
+        console.log(result);
+        console.log(result.length);
+        if (result.length == 0){
+            db.pets.insert(insert, function(err, docs){
+                console.log("created");
+                res.render('signup.ejs',{isLogined:logined});
+            });
+        }
+        else{
+            res.redirect("/signup");
+        }
+    })
 
-})
+});
 
 app.post('/search', function(req, res){
     var logined = false;
@@ -183,6 +229,7 @@ app.post('/search', function(req, res){
         });
     })
 });
+
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);

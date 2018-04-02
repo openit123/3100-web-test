@@ -21,6 +21,7 @@
 <% res.redirect('/');%>
 <% }%>
 <div id="wrapper">
+
     <!-- Header -->
     <header id="header">
         <h1><a href="/">Animal Tinder</a></h1>
@@ -78,6 +79,7 @@
                 </ul>
             </form>
             <% }else{ %>
+
             <form id="formLogin" action="login" method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
@@ -102,59 +104,11 @@
 
     <!-- Main -->
     <div id="main">
-
-        <form>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Feedback</label>
-                <textarea class="form-control" id="text" rows="3"></textarea>
-            </div>
-            <div class="alert alert-danger" role="alert" id="status" style="display: none">
-            </div>
-            <div class="alert alert-success" role="alert" id="status2" style="display: none">
-                This is a success alert—check it out!
-            </div>
-            <button type="button" onclick="Mail()">Submit</button>
-        </form>
-
-
     </div>
+
 </div>
 
 <!-- Scripts -->
-
-<script>
-    function Mail() {
-        var text = document.getElementById("text");
-        var status = document.getElementById("status");
-        var status2 = document.getElementById("status2");
-        var words = text.value;
-        var rude = "fuck";
-        if (words == "") {
-            status2.style.display='none';
-            status.innerHTML = "Oops. You submitted a blank feedback. Please enter again!";
-            status.style.display='block';
-        }
-        else {
-            if (words.search(rude) != -1) {
-                status.innerHTML = "Wow! Mind your language! Be polite!";
-                text.value = "";
-                status.style.display='block';
-            }
-            else {
-                window.location.href = "mailto:alvin2b35@yahoo.com.hk?subject=%5BPaw%2Dfect%20Match%5D%20Feedback&body=" + words;
-                status2.innerHTML = "One more step! Thank you for your support!";
-                status2.style.display='block';
-                status.style.display='none';
-                text.value = "";
-            }
-        }
-    }
-
-    // text.oninput = function(){
-    //     status.innerHTML = text.value;
-    //}
-</script>
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -170,6 +124,5 @@
 <!--[if lte IE 8]>
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
-
 </body>
 </html>
