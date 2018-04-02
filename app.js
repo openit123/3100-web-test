@@ -134,6 +134,33 @@ app.get('/profile', function (req, res, data) {
     });
 });
 
+app.get('/feedback', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('feedback.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/aboutUs', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('aboutUs.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/usefulLink', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('usefulLink.ejs', {isLogined: logined, res: res});
+});
+
 app.post('/upload', function (req, res) {
     var logined = false;
     if (req.session.sign) {
