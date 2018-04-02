@@ -49,7 +49,7 @@ app.get('/', function (req, res) {
     res.render('index.ejs', {isLogined: logined});
 });
 
-app.get('/contact', function (req,res) {
+app.get('/contact', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
@@ -117,7 +117,8 @@ app.post('/profile', function (req, res) {
         console.log(docs);
         db.pets.find(user).toArray(function (err, result) {
             console.log(result);
-            res.render('profile.ejs', {isLogined: logined,
+            res.render('profile.ejs', {
+                isLogined: logined,
                 pets: result,
             });
         });
@@ -150,9 +151,8 @@ app.get('/signup', function (req, res) {
         logined = true;
     }
 
-    res.render('signup.ejs',{isLogined:logined});
+    res.render('signup.ejs', {isLogined: logined});
 });
-
 
 app.get('/matching', function (req, res) {
 
@@ -176,6 +176,59 @@ app.get('/message', function (req, res) {
     res.render('message.ejs', {isLogined: logined, res: res});
 });
 
+app.get('/insertMessage', function (req, res) {
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://192.168.1.51:27017/";
+
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        var d = new Date();
+        var mins = d.getMinutes();
+        if (mins < 10) {
+            "0" + mins;
+        }
+        var generateTime = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "@" + d.getHours() + ":" + mins;
+        var obj = {
+            form: "tony123",
+            to: "alvin123",
+            content: "hi my phone number is 12345678",
+            readornot: "0",
+            data_time: generateTime
+        };
+        dbo.collection("messageRecord").insertOne(obj, function (err, result) {
+            if (err) throw err;
+            console.log("success");
+            db.close();
+        });
+    });
+});
+
+app.get('/map', function (req, res) {
+    res.render('template.ejs');
+});
+
+app.get('/deleteMessage', function (req, res) {
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://192.168.1.51:27017/";
+
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        var obj = {data_time: '2018-3-2@14:6'};
+        dbo.collection("messageRecord").deleteOne(obj, function (err, result) {
+            if (err) throw err;
+            console.log("success");
+            db.close();
+        });
+    });
+});
+
+app.post('matching', function (req, res) {
+    console.log("ajax request");
+    res.render('template.ejs');
+});
+
 app.post('/signup', function (req, res) {
     var logined = false;
     if (req.session.sign) {
@@ -193,32 +246,32 @@ app.post('/signup', function (req, res) {
         district: req.body.district,
         zone: req.body.zone,
     };
-    db.pets.find(user).toArray(function(err, result){
+    db.pets.find(user).toArray(function (err, result) {
         if (err)
             throw err;
         console.log(result);
         console.log(result.length);
-        if (result.length == 0){
-            db.pets.insert(insert, function(err, docs){
+        if (result.length == 0) {
+            db.pets.insert(insert, function (err, docs) {
                 console.log("created");
-                res.render('signup.ejs',{isLogined:logined});
+                res.render('signup.ejs', {isLogined: logined});
             });
         }
-        else{
+        else {
             res.redirect("/signup");
         }
     })
 
 });
 
-app.post('/search', function(req, res){
+app.post('/search', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
 
-    db.pets.find(function (err, docs){
+    db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
             isLogined: logined,
@@ -233,7 +286,7 @@ app.post('/search', function(req, res){
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = "mongodb://192.168.1.51:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -290,6 +343,9 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+
+//google map api key : AIzaSyCrbEpfCPcRwS2dmKldFD-dqIjLszQrT8A
 
 //add them in db
 //db.pets.insert({"username":"alvin123", "password":"alvin123", "emailaddr":"alvin@ymail.com", "f_name":"Alvin", "l_name":"Luk", "country":"China", "district":"HK", "zone":1, "p_name":"teddy", "p_age":5, "p_gender":"m", "type_of_p":"dog", "p_description":"h"})

@@ -13,13 +13,19 @@
     <link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        #map {
+            height: 450px;
+            width: 50%;
+        }
+    </style>
 </head>
-<body>
+<body onload="initMap();">
 
 <!-- Wrapper -->
 <% if(isLogined == false) { %>
-<% res.redirect('/');%>
-<% }%>
+<% res.redirect('/'); %>
+<% } %>
 <div id="wrapper">
 
     <!-- Header -->
@@ -75,7 +81,8 @@
             <% if(isLogined){ %>
             <form id="formLogout" action="logout" method="post">
                 <ul class="actions vertical">
-                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a></li>
+                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a>
+                    </li>
                 </ul>
             </form>
             <% }else{ %>
@@ -83,7 +90,8 @@
             <form id="formLogin" action="login" method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
-                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" name="username">
+                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp"
+                           placeholder="Username" name="username">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
@@ -92,7 +100,8 @@
             </form>
 
             <ul class="actions vertical">
-                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log In</a></li>
+                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log
+                        In</a></li>
             </ul>
             <!--<ul class="actions vertical">-->
             <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
@@ -104,11 +113,218 @@
 
     <!-- Main -->
     <div id="main">
+        <div class="alert alert-success" role="alert">
+            This is a success alert—check it out!
+        </div>
+        <div class="alert alert-danger" role="alert">
+            This is a danger alert—check it out!
+        </div>
+        <div id="map">
+        </div>
     </div>
 
 </div>
 
 <!-- Scripts -->
+<script>
+    function initMap() {
+        //centralwestern
+        var d1 = {lat: 22.273022, lng: 114.149881};
+        //wanchai
+        var d2 = {lat: 22.276247, lng: 114.182578};
+        //eastern
+        var d3 = {lat: 22.273389, lng: 114.236078};
+        //southern
+        var d4 = {lat: 22.243216, lng: 114.197440};
+        //kowlooncity
+        var d5 = {lat: 22.323210, lng: 114.185550};
+        //wongtaisin
+        var d6 = {lat: 22.354812, lng: 114.197440};
+        //kwuntong
+        var d7 = {lat: 22.315698, lng: 114.233106};
+        //yautsimmong
+        var d8 = {lat: 22.311603, lng: 114.170688};
+        //shamshuipo
+        var d9 = {lat: 22.332093, lng: 114.146908};
+        //tsuenwan
+        var d10 = {lat: 22.371323, lng: 114.114160};
+        //kwaitsing
+        var d11 = {lat: 22.354908, lng: 114.126099};
+        //saikung
+        var d12 = {lat: 22.383389, lng: 114.270976};
+        //shatin
+        var d13 = {lat: 22.386408, lng: 114.209329};
+        //taipo
+        var d14 = {lat: 22.442328, lng: 114.165521};
+        //northern
+        var d15 = {lat: 22.491940, lng: 114.138661};
+        //tuenmun
+        var d16 = {lat: 22.390829, lng: 113.972513};
+        //yuenlong
+        var d17 = {lat: 22.444538, lng: 114.022208};
+        //islands
+        var d18 = {lat: 22.264875, lng: 113.941281};
+        var center = {lat: 22.3754672, lng: 114.113345};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 11,
+            center: center
+        });
+        var marker1 = new google.maps.Marker({
+            position: d1,
+            map: map,
+            title: '中西區'
+        });
+        var marker2 = new google.maps.Marker({
+            position: d2,
+            map: map,
+            title: '灣仔區'
+        });
+        var marker3 = new google.maps.Marker({
+            position: d3,
+            map: map,
+            title: '東區'
+        });
+        var marker4 = new google.maps.Marker({
+            position: d4,
+            map: map,
+            title: '南區'
+        });
+        var marker5 = new google.maps.Marker({
+            position: d5,
+            map: map,
+            title: '九龍城區'
+        });
+        var marker6 = new google.maps.Marker({
+            position: d6,
+            map: map,
+            title: '黃大仙區'
+        });
+        var marker7 = new google.maps.Marker({
+            position: d7,
+            map: map,
+            title: '觀塘區'
+        });
+        var marker8 = new google.maps.Marker({
+            position: d8,
+            map: map,
+            title: '油尖旺區'
+        });
+        var marker9 = new google.maps.Marker({
+            position: d9,
+            map: map,
+            title: '深水埗區'
+        });
+        var marker10 = new google.maps.Marker({
+            position: d10,
+            map: map,
+            title: '荃灣區'
+
+        });
+        var marker11 = new google.maps.Marker({
+            position: d11,
+            map: map,
+            title: '葵青區'
+        });
+        var marker12 = new google.maps.Marker({
+            position: d12,
+            map: map,
+            title: '西貢區'
+        });
+        var marker13 = new google.maps.Marker({
+            position: d13,
+            map: map,
+            title: '沙田區'
+        });
+        var marker14 = new google.maps.Marker({
+            position: d14,
+            map: map,
+            title: '大埔區'
+        });
+        var marker15 = new google.maps.Marker({
+            position: d15,
+            map: map,
+            title: '北區'
+        });
+        var marker16 = new google.maps.Marker({
+            position: d16,
+            map: map,
+            title: '屯門區'
+        });
+        var marker17 = new google.maps.Marker({
+            position: d17,
+            map: map,
+            title: '元朗區'
+        });
+        var marker18 = new google.maps.Marker({
+            position: d18,
+            map: map,
+            title: '離島區'
+        });
+
+        marker1.addListener('click', function () {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if(this.readyState ==4 && this.status == 200){
+
+                }
+            }
+        });
+        marker2.addListener('click', function () {
+            alert("you are clicking 2");
+        })
+        marker3.addListener('click', function () {
+            alert("you are clicking 3");
+        })
+        marker4.addListener('click', function () {
+            alert("you are clicking 4");
+        })
+        marker5.addListener('click', function () {
+            alert("you are clicking 5");
+        })
+        marker6.addListener('click', function () {
+            alert("you are clicking 6");
+        })
+        marker7.addListener('click', function () {
+            alert("you are clicking 7");
+        })
+        marker8.addListener('click', function () {
+            alert("you are clicking 8");
+        })
+        marker9.addListener('click', function () {
+            alert("you are clicking 9");
+        })
+        marker10.addListener('click', function () {
+            alert("you are clicking 10");
+        })
+        marker11.addListener('click', function () {
+            alert("you are clicking 11");
+        })
+        marker12.addListener('click', function () {
+            alert("you are clicking 12");
+        })
+        marker13.addListener('click', function () {
+            alert("you are clicking 13");
+        })
+        marker14.addListener('click', function () {
+            alert("you are clicking 14");
+        })
+        marker15.addListener('click', function () {
+            alert("you are clicking 15");
+        })
+        marker16.addListener('click', function () {
+            alert("you are clicking 16");
+        })
+        marker17.addListener('click', function () {
+            alert("you are clicking 17");
+        })
+        marker18.addListener('click', function () {
+            alert("you are clicking 18");
+        })
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrbEpfCPcRwS2dmKldFD-dqIjLszQrT8A&callback=initMap">
+</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -124,5 +340,9 @@
 <!--[if lte IE 8]>
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrbEpfCPcRwS2dmKldFD-dqIjLszQrT8A&callback=initMap">
+</script>
+
 </body>
 </html>
