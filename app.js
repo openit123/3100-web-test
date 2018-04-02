@@ -80,6 +80,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true,
 }));
+
 app.use(function (req, res, next) {
     res.locals.errors = null;
     res.locals.type_of_p = null;
