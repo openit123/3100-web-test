@@ -335,7 +335,7 @@ app.get('/message', function (req, res) {
     }
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     var messagesize;
     var allmessage;
     var havemessage;
@@ -371,7 +371,7 @@ app.get('/message', function (req, res) {
 app.get('/insertMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -404,7 +404,7 @@ app.get('/map', function (req, res) {
 app.get('/deleteMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -420,7 +420,7 @@ app.get('/deleteMessage', function (req, res) {
 app.post('/sendMessage', function(req, res){
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     var username = {username: req.session.username};
 
     MongoClient.connect(url, function (err, db) {
@@ -511,7 +511,7 @@ app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
     //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");

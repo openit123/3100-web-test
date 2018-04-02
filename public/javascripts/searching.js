@@ -9,7 +9,7 @@ var mongojs = require('mongojs');
 //var mongoose = require('mongoose');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient,format = require('util').format;
-MongoClient.connect('mongodb://127.0.0.1:27017', function(err,db){
+MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017', function(err,db){
   if(err){
     throw err;
   }else{
@@ -137,6 +137,6 @@ myfirst.post('/pets/add', function(req, res){
 
 
 
-myfirst.listen(3000, function(){
-    console.log('Server started on Port 3000...');
-})
+// myfirst.listen(3000, function(){
+//     console.log('Server started on Port 3000...');
+// })
