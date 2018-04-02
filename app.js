@@ -7,14 +7,14 @@ var logger = require('morgan');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
-    if (err) {
-        throw err;
-    } else {
-        console.log("connected");
-    }
-    db.close();
-});
+// MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+//     if (err) {
+//         throw err;
+//     } else {
+//         console.log("connected");
+//     }
+//     db.close();
+// });
 var app = express();
 
 // view engine setup
@@ -55,7 +55,7 @@ app.get('/feedback', function (req, res) {
         console.log(req.session);
         logined = true;
     }
-    res.render('feedback.ejs',{isLogined: logined});
+    res.render('feedback.ejs', {isLogined: logined, res: res});
 });
 
 app.get('/profile', function (req, res, data) {
@@ -69,7 +69,9 @@ app.get('/profile', function (req, res, data) {
     var username = {username: "alvin123"};
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
-        res.render('profile.ejs', {isLogined: logined,
+        res.render('profile.ejs', {
+            res: res,
+            isLogined: logined,
             pets: docs,
         });
     })
@@ -119,7 +121,8 @@ app.post('/profile', function (req, res) {
         db.pets.updateOne(alvin123, update, function (err, docs) {
             console.log(docs);
             res.render('profile.ejs', {
-                isLogined:logined,
+                res: res,
+                isLogined: logined,
                 pets: docs,
                 type_of_p: update.type_of_pet,
                 p_gender: update.p_gender,
@@ -135,6 +138,7 @@ app.post('/profile', function (req, res) {
             db.pets.update(user, update, function (err, docs) {
                 console.log(docs);
                 res.render('profile.ejs', {
+                    res: res,
                     isLogined: logined,
                     pets: docs,
                     f_name: update.f_name,
@@ -167,6 +171,7 @@ app.get('/search', function (req, res, data) {
     db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
+            res: res,
             isLogined: logined,
             pets: docs,
         });
@@ -181,7 +186,29 @@ app.get('/signin', function (req, res) {
         logined = true;
     }
 
-    res.render('signin.ejs',{isLogined:logined});
+    res.render('signin.ejs', {isLogined: logined});
+});
+
+app.get('/matching', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    res.render('matching.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/message', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    res.render('message.ejs', {isLogined: logined, res: res});
 });
 
 app.post('/search/pets/add', function (req, res) {
@@ -200,6 +227,7 @@ app.post('/search/pets/add', function (req, res) {
     db.pets.find(function (err, docs) {
         app.post('/search', function (req, res) {
             var search = {
+                res: res,
                 type_of_p: req.body.type_of_p,
                 p_gender: req.body.p_gender,
                 p_age: req.body.p_age,
@@ -207,6 +235,7 @@ app.post('/search/pets/add', function (req, res) {
             db.pets.find(function (err, docs) {
                 console.log(docs);
                 res.render('search.ejs', {
+                    res: res,
                     pets: docs,
                     type_of_p: search.type_of_p,
                     p_gender: search.p_gender,
