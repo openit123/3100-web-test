@@ -108,16 +108,19 @@
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block" src="../images/images.png" height="300" width="400">
+                        <img class="d-block" src="../uploads/<%= pets.username %>.jpg" height="200">
                     </div>
                 </div>
             </div>
-
+            </form>
+            <%= typeof msg != 'undefined' ? msg : ' ' %>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
-                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                <a class="button small fit">Upload</a>
+                 <input type="file" name="myImage" class="form-control-file" id="exampleFormControlFile1" >
+                <button type="submit" class="button small fit">Upload</button>
             </span>
-
+            </form>
+        <form id="form">
             <div class="form-group">
                 <label for="emailaddr">Email address</label>
                 <input type="email" name="emailaddr" class="form-control" id="emailaddr" aria-describedby="emailHelp"
@@ -217,19 +220,13 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="type_of_p">Type of pet</label>
-                    <% if (pets.type_of_p == "dog"){%>
                     <select name="type_of_p" class="form-control" id="type_of_p" required>
-                        <option name="type_of_p" id="dog" value ="dog" selected="selected">Dog</option>
-                        <option name="type_of_p" id="cat" value = "cat">Cat</option>
-                    </select>
-                    <% } else if(pets.type_of_p == "cat"){%>
-                    <select name="type_of_p" class="form-control" id="type_of_p" required>
+                        <option id="undefined" disabled="disabled">Please select</option>
                         <option name="type_of_p" id="dog" value ="dog">Dog</option>
-                        <option name="type_of_p" id="cat" value = "cat" selected="selected">Cat</option>
+                        <option name="type_of_p" id="cat" value ="cat">Cat</option>
                     </select>
-                    <% }%>
                     <div class="invalid-feedback">
-                        Please provide your pet's type.
+                        Please tell us your pet's gender.
                     </div>
                 </div>
             </div>
@@ -237,7 +234,8 @@
                 <label for="exampleFormControlTextarea1">Pet's description</label>
                 <textarea name="p_description" class="form-control" id="p_description" rows="8"><%=pets.p_description%></textarea>
             </div>
-            <button type="button" onclick="Check_gender()">Update</button>
+            <button type="button" onclick="Check_gender(); Check_type();">Update</button>
+
             <div class="alert alert-danger" role="alert" id="failed" style="display: none">
             </div>
 
@@ -257,6 +255,14 @@
                 document.getElementById("undefined").selected = "true";
         <%}%>
 
+        <% if(pets.type_of_p == "dog") {%>
+        document.getElementById("dog").selected = "true";
+        <% } else if(pets.type_of_p == "cat") {%>
+        document.getElementById("cat").selected = "true";
+        <%  }else {%>
+        document.getElementById("undefined").selected = "true";
+        <%}%>
+
     }
     function Check_gender(){
         var p_gender = document.getElementById("p_gender").value;
@@ -264,6 +270,19 @@
         if(p_gender != "m" && p_gender != "f"){
             document.getElementById("failed").style.display = 'block';
             document.getElementById("failed").innerHTML = "Please select your pet's gender."
+        }
+        else{
+            document.getElementById("form").method = "POST";
+            document.getElementById("form").action = "/profile";
+            document.getElementById("form").submit();
+        }
+    }
+    function Check_type(){
+        var type_of_p = document.getElementById("type_of_p").value;
+
+        if(type_of_p != "dog" && type_of_p != "cat"){
+            document.getElementById("failed").style.display = 'block';
+            document.getElementById("failed").innerHTML = "Please select your pet's type."
         }
         else{
             document.getElementById("form").method = "POST";

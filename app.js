@@ -4,6 +4,7 @@ var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var multer = require('multer');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
@@ -17,6 +18,34 @@ var MongoClient = require('mongodb').MongoClient, format = require('util').forma
 // });
 var app = express();
 
+//set storage
+var un;
+const storage = multer.diskStorage({
+
+    destination: './public/uploads/',
+    filename: function(req, file, cb){
+        cb(null, un + path.extname(file.originalname));
+    }
+});
+//Init upload
+const upload = multer({
+    storage: storage,
+    limits:{fileSize: 1000000},
+    fileFilter: function(req, file, cb){
+        checkFileType(file, cb);
+    }
+}).single("myImage");
+
+function checkFileType(file, cb){
+    const filetypes = /jpeg|jpg|png|gif/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
+    if(mimetype && extname){
+        return cb(null, true);
+    } else{
+        cb('Error: Image Only');
+    }
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -76,6 +105,7 @@ app.get('/profile', function (req, res, data) {
     }
 
     var username = {username: req.session.username};
+    un = username.username;
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
         res.render('profile.ejs', {
@@ -85,6 +115,54 @@ app.get('/profile', function (req, res, data) {
         });
     });
 });
+
+app.post('/upload', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    upload(req, res, function (err) {
+        if (err) {
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err2, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg: err,
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
+                });
+            });
+        }else {
+            if (req.file == undefined) {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err2, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg: "Error: No File Selected!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            } else {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg: "File Uploaded!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            }
+        }
+        // Everything went fine
+    })
+})
 
 app.post('/profile', function (req, res) {
 
