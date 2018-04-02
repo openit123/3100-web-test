@@ -17,6 +17,9 @@
 <body onload = "Display()">
 
 <!-- Wrapper -->
+<% if(isLogined == false) { %>
+<% res.redirect('/');%>
+<% }%>
 <div id="wrapper">
     <!-- Header -->
     <header id="header">
@@ -27,10 +30,13 @@
                 <li><a href="/profile">profile</a></li>
                 <li><a href="/search">matching</a></li>
                 <li><a href="/feedback">feedback</a></li>
-                <li><a href="#">useful link</a></li>
-                <li><a href="#">about us</a></li>
+                <li><a href="/message">message</a></li>
+                <li><a href="/usefulLink">useful link</a></li>
+                <li><a href="/aboutUs">about us</a></li>
                 <% }else{ %>
                 <li><a href="/signin">Sign in</a></li>
+                <li><a href="/usefulLink">useful link</a></li>
+                <li><a href="/aboutUs">about us</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -102,16 +108,31 @@
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block" src="../images/images.png" height="300" width="400">
+                        <img class="d-block" src="../uploads/<%= pets.username %>.jpg" height="200">
                     </div>
                 </div>
             </div>
-
+        </form>
+        <bold>(For .jpg only)</bold>
+        <%= typeof msg != 'undefined' ? msg : ' ' %>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
-                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                <a class="button small fit">Upload</a>
+                 <input type="file" name="myImage" class="form-control-file" id="exampleFormControlFile1" >
+                <button type="submit" class="button small fit">Upload</button>
             </span>
-
+        </form>
+        <bold>Your can upload two photo of your pets !</bold>
+        <p>
+            <bold>(For .jpg only)</bold>
+        <%= typeof msg2 != 'undefined' ? msg2 : ' ' %>
+        <form action="/upload2" method="POST" enctype="multipart/form-data">
+            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
+                 <input type="file" name="myImage2" class="form-control-file" id="exampleFormControlFile1" >
+                <input type="file" name="myImage3" class="form-control-file" id="exampleFormControlFile1" >
+                <button type="submit" class="button small fit">Upload</button>
+            </span>
+        </form>
+        <form id="form">
             <div class="form-group">
                 <label for="emailaddr">Email address</label>
                 <input type="email" name="emailaddr" class="form-control" id="emailaddr" aria-describedby="emailHelp"
@@ -191,12 +212,12 @@
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                        <label for="p_age">Pet's age</label>
-                        <input type="text" name="p_age" class="form-control" id="p_age" placeholder="Pet's age"
-                               value="<%=pets.p_age%>" required>
-                        <div class="invalid-feedback">
-                            Please tell us your pet's age.
-                        </div>
+                    <label for="p_age">Pet's age</label>
+                    <input type="text" name="p_age" class="form-control" id="p_age" placeholder="Pet's age"
+                           value="<%=pets.p_age%>" required>
+                    <div class="invalid-feedback">
+                        Please tell us your pet's age.
+                    </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="p_gender">Pet's gender</label>
@@ -212,9 +233,9 @@
                 <div class="col-md-3 mb-3">
                     <label for="type_of_p">Type of pet</label>
                     <select name="type_of_p" class="form-control" id="type_of_p" required>
-                        <option id="undefined1" disabled="disabled">Please select</option>
+                        <option id="undefined" disabled="disabled">Please select</option>
+                        <option name="type_of_p" id="dog" value ="dog">Dog</option>
                         <option name="type_of_p" id="cat" value ="cat">Cat</option>
-                        <option name="type_of_p" id="dog" value = "dog">Dog</option>
                     </select>
                     <div class="invalid-feedback">
                         Please provide your pet's type.
@@ -225,7 +246,8 @@
                 <label for="exampleFormControlTextarea1">Pet's description</label>
                 <textarea name="p_description" class="form-control" id="p_description" rows="8"><%=pets.p_description%></textarea>
             </div>
-            <button type="button" onclick="Check_gender()">Update</button>
+            <button type="button" onclick="Check_gender(); Check_type();">Update</button>
+
             <div class="alert alert-danger" role="alert" id="failed" style="display: none">
             </div>
 
@@ -237,19 +259,20 @@
 
 <script>
     function Display() {
-         <% if(pets.p_gender == "m") {%>
-                document.getElementById("m").selected = "true";
-         <% } else if(pets.p_gender == "f") {%>
-                document.getElementById("f").selected = "true";
-         <%  }else {%>
-                document.getElementById("undefined").selected = "true";
-         <%}%>
-        <% if(pets.type_of_p == "cat") {%>
-        document.getElementById("cat").selected = "true";
-        <% } else if(pets.type_of_p == "dog") {%>
-        document.getElementById("dog").selected = "true";
+        <% if(pets.p_gender == "m") {%>
+        document.getElementById("m").selected = "true";
+        <% } else if(pets.p_gender == "f") {%>
+        document.getElementById("f").selected = "true";
         <%  }else {%>
-        document.getElementById("undefined1").selected = "true";
+        document.getElementById("undefined").selected = "true";
+        <%}%>
+
+        <% if(pets.type_of_p == "dog") {%>
+        document.getElementById("dog").selected = "true";
+        <% } else if(pets.type_of_p == "cat") {%>
+        document.getElementById("cat").selected = "true";
+        <%  }else {%>
+        document.getElementById("undefined").selected = "true";
         <%}%>
 
     }
@@ -259,6 +282,19 @@
         if(p_gender != "m" && p_gender != "f"){
             document.getElementById("failed").style.display = 'block';
             document.getElementById("failed").innerHTML = "Please select your pet's gender."
+        }
+        else{
+            document.getElementById("form").method = "POST";
+            document.getElementById("form").action = "/profile";
+            document.getElementById("form").submit();
+        }
+    }
+    function Check_type(){
+        var type_of_p = document.getElementById("type_of_p").value;
+
+        if(type_of_p != "dog" && type_of_p != "cat"){
+            document.getElementById("failed").style.display = 'block';
+            document.getElementById("failed").innerHTML = "Please select your pet's type."
         }
         else{
             document.getElementById("form").method = "POST";

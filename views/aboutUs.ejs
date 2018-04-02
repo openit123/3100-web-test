@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--[if lte IE 8]>
+    <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="assets/css/ie8.css"/><![endif]-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="/">Animal Tinder</a></h1>
+        <nav class="links">
+            <ul>
+                <% if(isLogined){ %>
+                <li><a href="/profile">profile</a></li>
+                <li><a href="/search">matching</a></li>
+                <li><a href="/feedback">feedback</a></li>
+                <li><a href="/message">message</a></li>
+                <li><a href="/usefulLink">useful link</a></li>
+                <li><a href="/aboutUs">about us</a></li>
+                <% }else{ %>
+                <li><a href="/signup">Sign up</a></li>
+                <li><a href="/usefulLink">useful link</a></li>
+                <li><a href="/aboutUs">about us</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <nav class="main">
+            <ul>
+                <!--<li class="search">-->
+                <!--<a class="fa-search" href="#search">Search</a>-->
+                <!--<form id="search" method="get" action="#">-->
+                <!--<input type="text" name="query" placeholder="Search"/>-->
+                <!--</form>-->
+                <!--</li>-->
+                <li class="menu">
+                    <a class="fa-bars" href="#menu">Menu</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <section id="menu">
+        <!-- Links -->
+        <section>
+            <ul class="links">
+                <li>
+                    <a href="#">
+                        <h3>Sample</h3>
+                        <p>Sample Test</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Actions -->
+        <section>
+            <% if(isLogined){ %>
+            <form id="formLogout" action="logout" method="post">
+                <ul class="actions vertical">
+                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a></li>
+                </ul>
+            </form>
+            <% }else{ %>
+
+            <form id="formLogin" action="login" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+            </form>
+
+            <ul class="actions vertical">
+                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log In</a></li>
+            </ul>
+            <!--<ul class="actions vertical">-->
+            <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
+            <!--</ul>-->
+            <% } %>
+        </section>
+
+    </section>
+
+    <!-- Main -->
+    <div id="main">
+
+
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

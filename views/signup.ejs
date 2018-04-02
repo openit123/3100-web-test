@@ -28,10 +28,13 @@
                 <li><a href="/profile">profile</a></li>
                 <li><a href="/search">matching</a></li>
                 <li><a href="/feedback">feedback</a></li>
-                <li><a href="#">useful link</a></li>
-                <li><a href="#">about us</a></li>
+                <li><a href="/message">message</a></li>
+                <li><a href="/usefulLink">useful link</a></li>
+                <li><a href="/aboutUs">about us</a></li>
                 <% }else{ %>
                 <li><a href="/signup">Sign up</a></li>
+                <li><a href="/usefulLink">useful link</a></li>
+                <li><a href="/aboutUs">about us</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -69,7 +72,8 @@
             <% if(isLogined){ %>
             <form id="formLogout" action="logout" method="post">
                 <ul class="actions vertical">
-                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a></li>
+                    <li><a class="button big fit" onclick="document.getElementById('formLogout').submit();">Log Out</a>
+                    </li>
                 </ul>
             </form>
             <% }else{ %>
@@ -77,7 +81,8 @@
             <form id="formLogin" action="login" method="post">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Username</label>
-                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" name="username">
+                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp"
+                           placeholder="Username" name="username">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
@@ -86,7 +91,8 @@
             </form>
 
             <ul class="actions vertical">
-                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log In</a></li>
+                <li><a class="button big fit" id="startLogin" onclick="document.getElementById('formLogin').submit();">Log
+                        In</a></li>
             </ul>
             <!--<ul class="actions vertical">-->
             <!--<li><a href="#" class="button big fit">Sing In</a></li>-->
@@ -95,7 +101,6 @@
         </section>
 
     </section>
-
 
     <!-- Main -->
     <div id="main">
@@ -121,7 +126,8 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="l_name">Last name</label>
-                    <input type="text" name="l_name" class="form-control" id="l_name" placeholder="Last name" value="Otto"
+                    <input type="text" name="l_name" class="form-control" id="l_name" placeholder="Last name"
+                           value="Otto"
                            required>
                     <div class="valid-feedback">
                         Looks good!
@@ -151,7 +157,8 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="district">District</label>
-                    <input type="text" name="district" class="form-control" id="district" placeholder="District" required>
+                    <input type="text" name="district" class="form-control" id="district" placeholder="District"
+                           required>
                     <div class="invalid-feedback">
                         Please provide a valid District.
                     </div>

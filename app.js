@@ -4,18 +4,66 @@ var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var multer = require('multer');
+var multer2 = require('multer');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-//MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
-//    if (err) {
-//        throw err;
-//    } else {
-//        console.log("connected");
-//    }
-//    db.close();
-//});
+// MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
+//     if (err) {
+//         throw err;
+//     } else {
+//         console.log("connected");
+//     }
+//     db.close();
+// });
 var app = express();
+
+//set storage
+var un;
+const storage = multer.diskStorage({
+
+    destination: './public/uploads/',
+    filename: function (req, file, cb) {
+        cb(null, un + path.extname(file.originalname));
+    }
+});
+
+const storage2 = multer2.diskStorage({
+
+    destination: './public/uploads/uncheck',
+    filename: function (req, file, cb) {
+        cb(null, un + Date.now() + path.extname(file.originalname));
+    }
+});
+//Init upload
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: 1000000},
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single("myImage");
+
+const upload2 = multer2({
+    storage: storage2,
+    limits: {fileSize: 1000000},
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    },
+    files: 2
+});
+
+function checkFileType(file, cb) {
+    const filetypes = /jpg/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Image Only');
+    }
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,6 +80,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true,
 }));
+
 app.use(function (req, res, next) {
     res.locals.errors = null;
     res.locals.type_of_p = null;
@@ -49,7 +98,7 @@ app.get('/', function (req, res) {
     res.render('index.ejs', {isLogined: logined});
 });
 
-app.get('/contact', function (req,res) {
+app.get('/contact', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
@@ -64,7 +113,7 @@ app.get('/feedback', function (req, res) {
         console.log(req.session);
         logined = true;
     }
-    res.render('feedback.ejs',{isLogined: logined});
+    res.render('feedback.ejs', {isLogined: logined, res: res});
 });
 
 app.get('/profile', function (req, res, data) {
@@ -76,13 +125,127 @@ app.get('/profile', function (req, res, data) {
     }
 
     var username = {username: req.session.username};
+    un = username.username;
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
-        res.render('profile.ejs', {isLogined: logined,
+        res.render('profile.ejs', {
+            res: res,
+            isLogined: logined,
             pets: docs,
         });
     });
 });
+
+app.get('/feedback', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('feedback.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/aboutUs', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('aboutUs.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/usefulLink', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('usefulLink.ejs', {isLogined: logined, res: res});
+});
+
+app.post('/upload', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    upload(req, res, function (err) {
+        if (err) {
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err2, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg: err,
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
+                });
+            });
+        } else {
+            if (req.file == undefined) {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err2, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg: "Error: No File Selected!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            } else {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg: "File Uploaded!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            }
+        }
+        // Everything went fine
+    })
+})
+
+app.post('/upload2', upload2.any(), function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    upload(req, res, function (err) {
+        if (err) {
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err2, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg2: err,
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
+                });
+            });
+        } else {
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg2: "The photo and it will be displayed after checking !",
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
+                });
+            });
+        }
+
+        // Everything went fine
+    })
+})
 
 app.post('/profile', function (req, res) {
 
@@ -115,11 +278,11 @@ app.post('/profile', function (req, res) {
         console.log(docs);
         db.pets.find(user).toArray(function (err, result) {
             console.log(result);
-            res.render('profile.ejs', {isLogined: logined,
+            res.render('profile.ejs', {
+                isLogined: logined,
                 pets: result,
             });
         });
-
     });
 });
 
@@ -134,6 +297,7 @@ app.get('/search', function (req, res, data) {
     db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
+            res: res,
             isLogined: logined,
             pets: docs,
         });
@@ -148,7 +312,113 @@ app.get('/signup', function (req, res) {
         logined = true;
     }
 
-    res.render('signup.ejs',{isLogined:logined});
+    res.render('signup.ejs', {isLogined: logined});
+});
+
+app.get('/matching', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    res.render('matching.ejs', {isLogined: logined, res: res});
+});
+
+app.get('/message', function (req, res) {
+
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://192.168.1.51:27017/";
+    var messagesize;
+    var allmessage;
+    var havemessage;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        dbo.collection("messageRecord").find({to: req.session.username}).toArray(function (err, result) {
+            console.log(result);
+            if (result.length == 0) {
+                havemessage = false;
+                res.render('message.ejs', {
+                    isLogined: logined,
+                    res: res,
+                    message: havemessage,
+                    messagesize: messagesize,
+                    allmessage: result
+                })
+            } else {
+                havemessage = true;
+                messagesize = result.length;
+                res.render('message.ejs', {
+                    isLogined: logined,
+                    res: res,
+                    message: havemessage,
+                    messagesize: messagesize,
+                    allmessage: result
+                })
+            }
+        })
+    });
+});
+
+app.get('/insertMessage', function (req, res) {
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://127.0.0.1:27017/";
+
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        var d = new Date();
+        var mins = d.getMinutes();
+        if (mins < 10) {
+            "0" + mins;
+        }
+        var generateTime = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate() + "@" + d.getHours() + ":" + mins;
+        var obj = {
+            form: "tony123",
+            to: "alvin123",
+            content: "hi my phone number is 12345678",
+            readornot: "0",
+            submittime: generateTime
+        };
+        dbo.collection("messageRecord").insertOne(obj, function (err, result) {
+            if (err) throw err;
+            console.log("success");
+            db.close();
+        });
+    });
+});
+
+app.get('/map', function (req, res) {
+    res.render('template.ejs');
+});
+
+app.get('/deleteMessage', function (req, res) {
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://127.0.0.1:27017/";
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        var obj = {data_time: '2018-3-2@14:6'};
+        dbo.collection("messageRecord").deleteOne(obj, function (err, result) {
+            if (err) throw err;
+            console.log("success");
+            db.close();
+        });
+    });
+});
+
+app.post('matching', function (req, res) {
+    console.log("ajax request");
+    res.render('template.ejs');
 });
 
 app.post('/signup', function (req, res) {
@@ -168,32 +438,32 @@ app.post('/signup', function (req, res) {
         district: req.body.district,
         zone: req.body.zone,
     };
-    db.pets.find(user).toArray(function(err, result){
+    db.pets.find(user).toArray(function (err, result) {
         if (err)
             throw err;
         console.log(result);
         console.log(result.length);
-        if (result.length == 0){
-            db.pets.insert(insert, function(err, docs){
+        if (result.length == 0) {
+            db.pets.insert(insert, function (err, docs) {
                 console.log("created");
-                res.render('signup.ejs',{isLogined:logined});
+                res.render('signup.ejs', {isLogined: logined});
             });
         }
-        else{
+        else {
             res.redirect("/signup");
         }
     })
 
 });
 
-app.post('/search', function(req, res){
+app.post('/search', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
 
-    db.pets.find(function (err, docs){
+    db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
             isLogined: logined,
@@ -204,10 +474,12 @@ app.post('/search', function(req, res){
         });
     })
 });
+
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -264,6 +536,9 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+
+//google map api key : AIzaSyCrbEpfCPcRwS2dmKldFD-dqIjLszQrT8A
 
 //add them in db
 //db.pets.insert({"username":"alvin123", "password":"alvin123", "emailaddr":"alvin@ymail.com", "f_name":"Alvin", "l_name":"Luk", "country":"China", "district":"HK", "zone":1, "p_name":"teddy", "p_age":5, "p_gender":"m", "type_of_p":"dog", "p_description":"h"})
