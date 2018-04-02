@@ -300,7 +300,7 @@
                 <form method="POST" action="/search">
                     <label>Type of pets</label>
                     <br>
-                    <select name="type_of_p">
+                    <select id="type_of_p">
                         <option value="dog">Dog</option>
                         <option value="cat">Cat</option>
                     </select>
@@ -326,7 +326,7 @@
 
 
 
-                <% pets.forEach(function(pets, search){ %>
+                <% pets.forEach(function(pets){ %>
                 <% if(pets.type_of_p == type_of_p && pets.p_gender == p_gender && pets.p_age < p_age) { %>
                 <img class="myImg" src="/images/<%= pets.p_name %>.jpg" alt="pet photo" style="height:180px;float:right;">
 

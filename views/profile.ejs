@@ -211,17 +211,11 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="type_of_p">Type of pet</label>
-                    <% if (pets.type_of_p == "dog"){%>
                     <select name="type_of_p" class="form-control" id="type_of_p" required>
-                        <option name="type_of_p" id="dog" value ="dog" selected="selected">Dog</option>
-                        <option name="type_of_p" id="cat" value = "cat">Cat</option>
+                        <option id="undefined1" disabled="disabled">Please select</option>
+                        <option name="type_of_p" id="cat" value ="cat">Cat</option>
+                        <option name="type_of_p" id="dog" value = "dog">Dog</option>
                     </select>
-                    <% } else if(pets.type_of_p == "cat"){%>
-                    <select name="type_of_p" class="form-control" id="type_of_p" required>
-                        <option name="type_of_p" id="dog" value ="dog">Dog</option>
-                        <option name="type_of_p" id="cat" value = "cat" selected="selected">Cat</option>
-                    </select>
-                    <% }%>
                     <div class="invalid-feedback">
                         Please provide your pet's type.
                     </div>
@@ -245,10 +239,17 @@
     function Display() {
          <% if(pets.p_gender == "m") {%>
                 document.getElementById("m").selected = "true";
-        <% } else if(pets.p_gender == "f") {%>
+         <% } else if(pets.p_gender == "f") {%>
                 document.getElementById("f").selected = "true";
-       <%  }else {%>
+         <%  }else {%>
                 document.getElementById("undefined").selected = "true";
+         <%}%>
+        <% if(pets.type_of_p == "cat") {%>
+        document.getElementById("cat").selected = "true";
+        <% } else if(pets.type_of_p == "dog") {%>
+        document.getElementById("dog").selected = "true";
+        <%  }else {%>
+        document.getElementById("undefined1").selected = "true";
         <%}%>
 
     }
