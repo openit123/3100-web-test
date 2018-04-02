@@ -23,34 +23,7 @@
 <div id="wrapper">
     <!-- Header -->
     <header id="header">
-        <h1><a href="/">Animal Tinder</a></h1>
-        <nav class="links">
-            <ul>
-                <% if(isLogined){ %>
-                <li><a href="/profile">profile</a></li>
-                <li><a href="/search">matching</a></li>
-                <li><a href="/feedback">feedback</a></li>
-                <li><a href="/message">message</a></li>
-                <li><a href="#">useful link</a></li>
-                <li><a href="#">about us</a></li>
-                <% }else{ %>
-                <li><a href="/signin">Sign in</a></li>
-                <% } %>
-            </ul>
-        </nav>
-        <nav class="main">
-            <ul>
-                <!--<li class="search">-->
-                <!--<a class="fa-search" href="#search">Search</a>-->
-                <!--<form id="search" method="get" action="#">-->
-                <!--<input type="text" name="query" placeholder="Search"/>-->
-                <!--</form>-->
-                <!--</li>-->
-                <li class="menu">
-                    <a class="fa-bars" href="#menu">Menu</a>
-                </li>
-            </ul>
-        </nav>
+        <% include ./partials/head %>
     </header>
 
     <!-- Menu -->
