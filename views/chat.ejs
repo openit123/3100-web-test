@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Chat | Paw-fect Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="/assets/css/chatStyles.css">
+</head>
+
+<body class="chat">
+
+  <div class="chat__sidebar">
+    <h3>People</h3>
+    <div id="users"></div>
+  </div>
+
+  <div class="chat__main">
+    <ol id="messages" class="chat__messages"></ol>
+
+    <div class="chat__footer">
+      <form id="message-form">
+        <input name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
+        <button>Send</button>
+      </form>
+      <!-- <button id="send-location">Send location</button> -->
+    </div>
+  </div>
+
+  <script id="message-template" type="text/template">
+    <li class="message">
+      <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{sentAt}}</span>
+      </div>
+      <div class="message_body">
+        <p>{{text}}</p>
+      </div>
+    </li>
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+  <script src="/assets/js/jquery.min.js"></script>
+  <script src="/assets/js/moment.js"></script>
+  <script src="/assets/js/mustache.js"></script>
+  <script src="/assets/js/deparam.js"></script>
+  <script src="/javascripts/chat.js"></script>
+</body>
+
+</html>

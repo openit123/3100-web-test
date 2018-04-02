@@ -9,6 +9,7 @@ var multer2 = require('multer');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
+
 // MongoClient.connect('mongodb://192.168.1.51:27017', function (err, db) {
 //     if (err) {
 //         throw err;
@@ -89,6 +90,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+// routes
 app.get('/', function (req, res) {
     var logined = false;
     if (req.session.sign) {
@@ -415,6 +417,14 @@ app.get('/deleteMessage', function (req, res) {
             db.close();
         });
     });
+});
+
+app.get('/chat', (req, res) => {
+    res.render('chat');
+});
+
+app.get('/joinChat', (req, res) => {
+    res.render('joinChat');
 });
 
 app.post('/sendMessage', function(req, res){
