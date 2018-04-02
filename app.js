@@ -24,7 +24,7 @@ var un;
 const storage = multer.diskStorage({
 
     destination: './public/uploads/',
-    filename: function(req, file, cb){
+    filename: function (req, file, cb) {
         cb(null, un + path.extname(file.originalname));
     }
 });
@@ -32,38 +32,39 @@ const storage = multer.diskStorage({
 const storage2 = multer2.diskStorage({
 
     destination: './public/uploads/uncheck',
-    filename: function(req, file, cb){
+    filename: function (req, file, cb) {
         cb(null, un + Date.now() + path.extname(file.originalname));
     }
 });
 //Init upload
 const upload = multer({
     storage: storage,
-    limits:{fileSize: 1000000},
-    fileFilter: function(req, file, cb){
+    limits: {fileSize: 1000000},
+    fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
 }).single("myImage");
 
 const upload2 = multer2({
     storage: storage2,
-    limits:{fileSize: 1000000},
-    fileFilter: function(req, file, cb){
+    limits: {fileSize: 1000000},
+    fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     },
     files: 2
 });
 
-function checkFileType(file, cb){
+function checkFileType(file, cb) {
     const filetypes = /jpg/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
-    if(mimetype && extname){
+    if (mimetype && extname) {
         return cb(null, true);
-    } else{
+    } else {
         cb('Error: Image Only');
     }
 }
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -180,7 +181,7 @@ app.post('/upload', function (req, res) {
                     pets: docs,
                 });
             });
-        }else {
+        } else {
             if (req.file == undefined) {
                 var username = {username: req.session.username};
                 db.pets.find(username).toArray(function (err2, docs) {
@@ -229,17 +230,17 @@ app.post('/upload2', upload2.any(), function (req, res) {
                 });
             });
         } else {
-                var username = {username: req.session.username};
-                db.pets.find(username).toArray(function (err, docs) {
-                    console.log(docs);
-                    res.render('profile.ejs', {
-                        msg2: "The photo and it will be displayed after checking !",
-                        res: res,
-                        isLogined: logined,
-                        pets: docs,
-                    });
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg2: "The photo and it will be displayed after checking !",
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
                 });
-            }
+            });
+        }
 
         // Everything went fine
     })
@@ -331,14 +332,44 @@ app.get('/message', function (req, res) {
         console.log(req.session);
         logined = true;
     }
-
-    res.render('message.ejs', {isLogined: logined, res: res});
+    var MongoClient = require('mongodb').MongoClient;
+    var url = "mongodb://192.168.1.51:27017/";
+    var messagesize;
+    var allmessage;
+    var havemessage;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var dbo = db.db("myfirst");
+        dbo.collection("messageRecord").find({to: req.session.username}).toArray(function (err, result) {
+            console.log(result);
+            if (result.length == 0) {
+                havemessage = false;
+                res.render('message.ejs', {
+                    isLogined: logined,
+                    res: res,
+                    message: havemessage,
+                    messagesize: messagesize,
+                    allmessage: result
+                })
+            } else {
+                havemessage = true;
+                messagesize = result.length;
+                res.render('message.ejs', {
+                    isLogined: logined,
+                    res: res,
+                    message: havemessage,
+                    messagesize: messagesize,
+                    allmessage: result
+                })
+            }
+        })
+    });
 });
 
 app.get('/insertMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://127.0.0.1:27017/";
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -354,7 +385,7 @@ app.get('/insertMessage', function (req, res) {
             to: "alvin123",
             content: "hi my phone number is 12345678",
             readornot: "0",
-            data_time: generateTime
+            submittime: generateTime
         };
         dbo.collection("messageRecord").insertOne(obj, function (err, result) {
             if (err) throw err;
@@ -370,8 +401,8 @@ app.get('/map', function (req, res) {
 
 app.get('/deleteMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -446,8 +477,8 @@ app.post('/search', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    //var url = "mongodb://192.168.1.51:27017/";
-    var url = "mongodb://127.0.0.1:27017/";
+    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
