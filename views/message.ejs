@@ -18,8 +18,8 @@
 
 <!-- Wrapper -->
 <% if(isLogined == false) { %>
-<% res.redirect('/');%>
-<% }%>
+<% res.redirect('/'); %>
+<% } %>
 <div id="wrapper">
 
     <!-- Header -->
@@ -108,48 +108,42 @@
     <!-- Main -->
     <div id="main">
         <ul class="list-group list-group-flush">
+            <% if(message == false){ %>
+            <div>
+                <span class="badge badge-warning">Message: 0</span>
+            </div>
+            <% }else{ %>
+            <div>
+                <span class="badge badge-warning">Message: <%= messagesize %></span>
+            </div>
+            <% for(var i = 0;i < messagesize;i++){ %>
             <li class="list-group-item">
                 <div class="card">
                     <div class="card-header">
+                        <% if(allmessage[i].readornot == 0){ %>
                         <span class="badge badge-success">unseen</span>
-                        <ul class="nav justify-content-end">
-                            <li class="nav-item">
-                                <a class="nav-link active">From: </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">Date:</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Mark as Read</a>
-                    </div>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="card">
-                    <div class="card-header">
+                        <% }else{ %>
                         <span class="badge badge-dark">seen</span>
+                        <% } %>
                         <ul class="nav justify-content-end">
                             <li class="nav-item">
-                                <a class="nav-link active">From: </a>
+                                <a class="nav-link active">From: <%= allmessage[i].form %> </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link">Date:</a>
+                                <a class="nav-link">Date: <%= allmessage[i].submittime %></a>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><%= allmessage[i].content %></p>
+                        <span class="badge badge-light"><a>Mark as read</a></span>
                     </div>
                 </div>
             </li>
+            <% } %>
+            <% } %>
         </ul>
     </div>
-
 </div>
 
 <!-- Scripts -->
@@ -171,7 +165,6 @@
 <script>
     function login() {
         var x = document.getElementById("startLogin");
-
     }
 </script>
 </body>
