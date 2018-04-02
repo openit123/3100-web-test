@@ -267,13 +267,13 @@ app.post('/profile', function (req, res) {
                 district: req.body.district,
                 zone: req.body.zone,
                 country: req.body.country,
-                username: req.body.username,
+                username: req.body.name,
                 p_description: req.body.p_description,
-                password: req.body.password,
-                emailaddr: req.body.emailaddr
+                password: req.body.passwd,
+                emailaddr: req.body.emailaddr,
             }
     };
-    var user = {username: req.body.username};
+    var user = {username: req.body.name};
     db.pets.update(user, update, function (err, docs) {
         console.log(docs);
         db.pets.find(user).toArray(function (err, result) {
@@ -416,9 +416,9 @@ app.get('/deleteMessage', function (req, res) {
     });
 });
 
-app.post('matching', function (req, res) {
+app.post('/matching', function (req, res) {
     console.log("ajax request");
-    res.render('template.ejs');
+    //  res.render('template.ejs');
 });
 
 app.post('/signup', function (req, res) {
@@ -478,8 +478,8 @@ app.post('/search', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
