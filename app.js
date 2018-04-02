@@ -34,9 +34,9 @@ app.use(session({
 }));
 app.use(function (req, res, next) {
     res.locals.errors = null;
-    res.locals.types_of_pet = null;
-    res.locals.gender = null;
-    res.locals.years_old = null;
+    res.locals.type_of_p = null;
+    res.locals.p_gender = null;
+    res.locals.p_age = null;
     next();
 });
 
@@ -47,6 +47,15 @@ app.get('/', function (req, res) {
         logined = true;
     }
     res.render('index.ejs', {isLogined: logined});
+});
+
+app.get('/contact', function (req,res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    res.render('contact.ejs', {isLogined: logined});
 });
 
 app.get('/feedback', function (req, res) {
@@ -66,7 +75,7 @@ app.get('/profile', function (req, res, data) {
         logined = true;
     }
 
-    var username = {username: "alvin123"};
+    var username = {username: req.session.username};
     db.pets.find(username).toArray(function (err, docs) {
         console.log(docs);
         res.render('profile.ejs', {
@@ -74,20 +83,7 @@ app.get('/profile', function (req, res, data) {
             isLogined: logined,
             pets: docs,
         });
-    })
-});
-
-app.post('/profile/update', function (req, res) {
-    var update = {
-        type_of_pet: req.body.type_of_pet,
-        p_gender: req.body.p_gender,
-        p_age: req.body.p_age,
-        district: req.body.district,
-        zone: req.body.zone,
-        country: req.body.country,
-        username: req.body.username,
-        p_description: req.body.p_description
-    }
+    });
 });
 
 app.post('/profile', function (req, res) {
@@ -116,45 +112,13 @@ app.post('/profile', function (req, res) {
                 emailaddr: req.body.emailaddr
             }
     };
-    db.pets.save(function (err, docs) {
-        var alvin123 = {username: req.body.username};
-        db.pets.updateOne(alvin123, update, function (err, docs) {
-            console.log(docs);
-            res.render('profile.ejs', {
-                res: res,
-                isLogined: logined,
-                pets: docs,
-                type_of_p: update.type_of_pet,
-                p_gender: update.p_gender,
-                p_age: update.p_age,
-                district: update.district,
-                zone: update.zone,
-                country: update.country,
-                username: update.username,
-                p_description: update.p_description,
-                password: update.password
-            });
-            var user = {username: req.body.username};
-            db.pets.update(user, update, function (err, docs) {
-                console.log(docs);
-                res.render('profile.ejs', {
-                    res: res,
-                    isLogined: logined,
-                    pets: docs,
-                    f_name: update.f_name,
-                    l_name: update.l_name,
-                    p_name: update.p_name,
-                    type_of_p: update.type_of_p,
-                    p_gender: update.p_gender,
-                    p_age: update.p_age,
-                    district: update.district,
-                    zone: update.zone,
-                    country: update.country,
-                    username: update.username,
-                    p_description: update.p_description,
-                    password: update.password,
-                    emailaddr: update.emailaddr
-                });
+    var user = {username: req.body.username};
+    db.pets.update(user, update, function (err, docs) {
+        console.log(docs);
+        db.pets.find(user).toArray(function (err, result) {
+            console.log(result);
+            res.render('profile.ejs', {isLogined: logined,
+                pets: result,
             });
         });
     });
@@ -178,7 +142,7 @@ app.get('/search', function (req, res, data) {
     })
 });
 
-app.get('/signin', function (req, res) {
+app.get('/signup', function (req, res) {
 
     var logined = false;
     if (req.session.sign) {
@@ -186,8 +150,9 @@ app.get('/signin', function (req, res) {
         logined = true;
     }
 
-    res.render('signin.ejs', {isLogined: logined});
+    res.render('signup.ejs',{isLogined:logined});
 });
+
 
 app.get('/matching', function (req, res) {
 
@@ -211,37 +176,56 @@ app.get('/message', function (req, res) {
     res.render('message.ejs', {isLogined: logined, res: res});
 });
 
-app.post('/search/pets/add', function (req, res) {
+app.post('/signup', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+    var user = {username: req.body.username};
+    var insert = {
+        username: req.body.username,
+        password: req.body.password,
+        emailaddr: req.body.emailaddr,
+        f_name: req.body.f_name,
+        l_name: req.body.l_name,
+        country: req.body.country,
+        district: req.body.district,
+        zone: req.body.zone,
+    };
+    db.pets.find(user).toArray(function(err, result){
+        if (err)
+            throw err;
+        console.log(result);
+        console.log(result.length);
+        if (result.length == 0){
+            db.pets.insert(insert, function(err, docs){
+                console.log("created");
+                res.render('signup.ejs',{isLogined:logined});
+            });
+        }
+        else{
+            res.redirect("/signup");
+        }
+    })
 
+});
+
+app.post('/search', function(req, res){
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
 
-    var search = {
-        types_of_pet: req.body.types_of_pet,
-        gender: req.body.gender,
-        years_old: req.body.years_old,
-    };
-    db.pets.find(function (err, docs) {
-        app.post('/search', function (req, res) {
-            var search = {
-                res: res,
-                type_of_p: req.body.type_of_p,
-                p_gender: req.body.p_gender,
-                p_age: req.body.p_age,
-            }
-            db.pets.find(function (err, docs) {
-                console.log(docs);
-                res.render('search.ejs', {
-                    res: res,
-                    pets: docs,
-                    type_of_p: search.type_of_p,
-                    p_gender: search.p_gender,
-                    p_age: search.p_age
-                });
-            })
+    db.pets.find(function (err, docs){
+        console.log(docs);
+        res.render('search.ejs', {
+            isLogined: logined,
+            pets: docs,
+            type_of_p: req.body.type_of_p,
+            p_gender: req.body.p_gender,
+            p_age: req.body.p_age
         });
     })
 });
@@ -249,7 +233,7 @@ app.post('/search/pets/add', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://192.168.1.51:27017/";
+    var url = "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -264,6 +248,7 @@ app.post('/login', function (req, res) {
             var logined = false;
             if (result == null || result.length != 1) {
                 console.log("Login Fail");
+                res.redirect("/");
             } else {
                 console.log("Login Success");
                 if (req.session.sign) {

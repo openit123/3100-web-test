@@ -14,13 +14,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body onload = "Display()">
+<body>
 
 <!-- Wrapper -->
-<% if(isLogined == false) { %>
-<% res.redirect('/');%>
-<% }%>
 <div id="wrapper">
+
     <!-- Header -->
     <header id="header">
         <h1><a href="/">Animal Tinder</a></h1>
@@ -34,9 +32,9 @@
                 <li><a href="#">useful link</a></li>
                 <li><a href="#">about us</a></li>
                 <% }else{ %>
-                <li><a href="/signin">Sign in</a></li>
                 <li><a href="#">useful link</a></li>
                 <li><a href="#">about us</a></li>
+                <li><a href="/signup">Sign up</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -103,46 +101,30 @@
 
     <!-- Main -->
     <div id="main">
-        <%pets.forEach(function(pets){%>
-        <form id="form">
-            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block" src="../images/images.png" height="300" width="400">
-                    </div>
-                </div>
-            </div>
-
-            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
-                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                <a class="button small fit">Upload</a>
-            </span>
-
+        <form method="POST" action="/signup">
             <div class="form-group">
-                <label for="emailaddr">Email address</label>
+                <label for="exampleInputEmail1">Email address</label>
                 <input type="email" name="emailaddr" class="form-control" id="emailaddr" aria-describedby="emailHelp"
-                       placeholder="Enter email" value="<%=pets.emailaddr%>">
+                       placeholder="Enter email">
             </div>
             <div class="form-group">
-                <label for="passwd">Password</label>
-                <input type="password" name="password" class="form-control" id="passwd"
-                       value="<%=pets.password%>" placeholder="Password">
-                <input type="checkbox" onclick="myFunction()">Show Password
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="passwd" placeholder="Password">
             </div>
 
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="f_name">First name</label>
                     <input type="text" name="f_name" class="form-control" id="f_name" placeholder="First name"
-                           value="<%=pets.f_name%>" required>
+                           value="Mark" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="l_name">Last name</label>
-                    <input type="text" name="l_name" class="form-control" id="l_name" placeholder="Last name"
-                           value="<%=pets.l_name%>" required>
+                    <input type="text" name="l_name" class="form-control" id="l_name" placeholder="Last name" value="Otto"
+                           required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -153,8 +135,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupPrepend">#</span>
                         </div>
-                        <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="Username"
-                               aria-describedby="inputGroupPrepend" value="<%=pets.username%>"readonly required>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Username"
+                               aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                             Please choose a username.
                         </div>
@@ -164,124 +146,42 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="country">Country</label>
-                    <input type="text" name="country" class="form-control" id="country" placeholder="Country"
-                           value="<%=pets.country%>"required>
+                    <input type="text" name="country" class="form-control" id="country" placeholder="Country" required>
                     <div class="invalid-feedback">
                         Please provide a valid Country.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="district">District</label>
-                    <input type="text" name="district" class="form-control" id="district" placeholder="District"
-                           value="<%=pets.district%>" required>
+                    <input type="text" name="district" class="form-control" id="district" placeholder="District" required>
                     <div class="invalid-feedback">
                         Please provide a valid District.
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="zone">Zone</label>
-                    <input type="text" name="zone" class="form-control" id="zone" placeholder="Zone"
-                           value="<%=pets.zone%>" required>
+                    <input type="text" name="zone" class="form-control" id="zone" placeholder="Zone" required>
                     <div class="invalid-feedback">
                         Please provide a valid Zone.
                     </div>
                 </div>
             </div>
-            <div class = "form-row">
-                <div class="col-md-3 mb-3">
-                    <label for="p_name">Pet's name</label>
-                    <input type="text" name="p_name" class="form-control" id="p_name" placeholder="Pet's name"
-                           value="<%=pets.p_name%>" required>
-                    <div class="invalid-feedback">
-                        Please tell us your pet's name.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                        <label for="p_age">Pet's age</label>
-                        <input type="text" name="p_age" class="form-control" id="p_age" placeholder="Pet's age"
-                               value="<%=pets.p_age%>" required>
-                        <div class="invalid-feedback">
-                            Please tell us your pet's age.
-                        </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="p_gender">Pet's gender</label>
-                    <select name="p_gender" class="form-control" id="p_gender" required>
-                        <option id="undefined" disabled="disabled">Please select</option>
-                        <option name="p_gender" id="m" value ="m">M</option>
-                        <option name="p_gender" id="f" value = "f">F</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Please tell us your pet's gender.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="type_of_p">Type of pet</label>
-                    <% if (pets.type_of_p == "dog"){%>
-                    <select name="type_of_p" class="form-control" id="type_of_p" required>
-                        <option name="type_of_p" id="dog" value ="dog" selected="selected">Dog</option>
-                        <option name="type_of_p" id="cat" value = "cat">Cat</option>
-                    </select>
-                    <% } else if(pets.type_of_p == "cat"){%>
-                    <select name="type_of_p" class="form-control" id="type_of_p" required>
-                        <option name="type_of_p" id="dog" value ="dog">Dog</option>
-                        <option name="type_of_p" id="cat" value = "cat" selected="selected">Cat</option>
-                    </select>
-                    <% }%>
-                    <div class="invalid-feedback">
-                        Please provide your pet's type.
-                    </div>
-                </div>
-            </div>
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Pet's description</label>
-                <textarea name="p_description" class="form-control" id="p_description" rows="8"><%=pets.p_description%></textarea>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                        You must agree before submitting.
+                    </div>
+                </div>
             </div>
-            <button type="button" onclick="Check_gender()">Update</button>
-            <div class="alert alert-danger" role="alert" id="failed" style="display: none">
-            </div>
-
+            <input type="submit" value="Create">
         </form>
-
     </div>
 
 </div>
-
-<script>
-    function Display() {
-         <% if(pets.p_gender == "m") {%>
-                document.getElementById("m").selected = "true";
-        <% } else if(pets.p_gender == "f") {%>
-                document.getElementById("f").selected = "true";
-       <%  }else {%>
-                document.getElementById("undefined").selected = "true";
-        <%}%>
-
-    }
-    function Check_gender(){
-        var p_gender = document.getElementById("p_gender").value;
-
-        if(p_gender != "m" && p_gender != "f"){
-            document.getElementById("failed").style.display = 'block';
-            document.getElementById("failed").innerHTML = "Please select your pet's gender."
-        }
-        else{
-            document.getElementById("form").method = "POST";
-            document.getElementById("form").action = "/profile";
-            document.getElementById("form").submit();
-        }
-    }
-    <%});%>
-
-    function myFunction() {
-        var x = document.getElementById("passwd");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
-    }
-</script>
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
