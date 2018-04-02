@@ -14,9 +14,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
-
+<body onload="Display_other()">
+<% pets.forEach(function(pets) {%>
 <!-- Wrapper -->
+<% if(isLogined == false) { %>
+<% res.redirect('/');%>
+<% }%>
 <div id="wrapper">
     <!-- Header -->
     <header id="header">
@@ -27,6 +30,7 @@
                 <li><a href="/profile">profile</a></li>
                 <li><a href="/search">matching</a></li>
                 <li><a href="/feedback">feedback</a></li>
+                <li><a href="/message">message</a></li>
                 <li><a href="#">useful link</a></li>
                 <li><a href="#">about us</a></li>
                 <% }else{ %>
@@ -104,7 +108,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupPrepend">#</span>
                         </div>
-                        <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="Username"
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Username"
                                aria-describedby="inputGroupPrepend" readonly required>
                         <div class="invalid-feedback">
                             Please choose a username.
@@ -157,7 +161,7 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="p_type">Type of pet</label>
-                    <input type="text" name="type_of_p" class="form-control" id="p_type" placeholder="Type of pet"
+                    <input type="text" name="type_of_p" class="form-control" id="type_of_p" placeholder="Type of pet"
                            readonly required>
                     <div class="invalid-feedback">
                         Please provide your pet's type.
@@ -167,7 +171,7 @@
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Pet's description</label>
                 <textarea name="p_description" class="form-control" id="p_description" rows="8" style="border: none"
-                          readonly></textarea>
+                          readonly><%=pets.p_description%></textarea>
             </div>
             <div class="alert alert-danger" role="alert" id="fail" style="display: none">
             </div>
@@ -183,7 +187,30 @@
 </div>
 
 <script>
+    function Contact(){
+        document.getElementById("form").method="GET";
+        document.getElementById("form").action="/insertMessage";
+        document.getElementById("form").submit();
+    }
 
+    function Return(){
+        document.getElementById("form").method="POST";
+        document.getElementById("form").action="/search";
+        document.getElementById("form").submit();
+    }
+
+    function Display_other(){
+        document.getElementById("emailaddr").value="<%=pets.emailaddr%>";
+        document.getElementById("l_name").value="<%=pets.l_name%>";
+        document.getElementById("username").value="<%=pets.username%>";
+        document.getElementById("district").value="<%=pets.district%>";
+        document.getElementById("zone").value="<%=pets.zone%>";
+        document.getElementById("p_name").value="<%=pets.p_name%>";
+        document.getElementById("p_age").value="<%=pets.p_age%>";
+        document.getElementById("p_gender").value="<%=pets.p_gender%>";
+        document.getElementById("type_of_p").value="<%=pets.type_of_p%>";
+    }
+    <%});%>
 </script>
 
 <!-- Scripts -->

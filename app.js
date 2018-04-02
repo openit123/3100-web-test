@@ -98,13 +98,23 @@ app.get('/', function (req, res) {
     res.render('index.ejs', {isLogined: logined});
 });
 
-app.get('/contact', function (req, res) {
+app.post('/contact', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
         logined = true;
     }
-    res.render('contact.ejs', {isLogined: logined});
+    var data = {
+        username: req.body.username,
+    }
+    console.log(data);
+    db.pets.find(data).toArray(function (err, docs) {
+        console.log(docs);
+        res.render('contact.ejs', {
+            isLogined: logined,
+            pets: docs,
+        });
+    });
 });
 
 app.get('/feedback', function (req, res) {
@@ -494,7 +504,9 @@ app.post('/search', function (req, res) {
         console.log(req.session);
         logined = true;
     }
-
+    console.log(req.body.type_of_p);
+    console.log(req.body.p_gender);
+    console.log(req.body.p_age);
     db.pets.find(function (err, docs) {
         console.log(docs);
         res.render('search.ejs', {
@@ -502,7 +514,7 @@ app.post('/search', function (req, res) {
             pets: docs,
             type_of_p: req.body.type_of_p,
             p_gender: req.body.p_gender,
-            p_age: req.body.p_age
+            p_age: req.body.p_age,
         });
     })
 });
