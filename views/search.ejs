@@ -210,6 +210,11 @@
     </style>
 </head>
 <body>
+
+<!-- Wrapper -->
+<% if(isLogined == false) { %>
+<% res.redirect('/');%>
+<% }%>
 <div id="wrapper">
     <!-- Header -->
     <header id="header">
@@ -303,7 +308,7 @@
                 <form method="POST" action="/search">
                     <label>Type of pets</label>
                     <br>
-                    <select id="type_of_p">
+                    <select name="type_of_p">
                         <option value="dog">Dog</option>
                         <option value="cat">Cat</option>
                     </select>
@@ -349,10 +354,10 @@
                 </div>
                 <p>Name: <%= pets.p_name %></p>
                 <p>Type: <%= pets.type_of_p %></p>
-                <p>Gender: <%= pets.p_gender %></p>
+                <p  >Gender: <%= pets.p_gender %></p>
 
                 <p>Years_old: <%= pets.p_age %></p>
-                <form action="/sendMessage" method="POST">
+                <form action="/contact" method="POST">
 
                 <input type="hidden" name="username" value="<%=pets.username%>">
                 <input type="submit" class="btn" value="Click to know more !">
