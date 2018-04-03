@@ -21,8 +21,8 @@ socket.on('connect', function () {
 
   socket.emit('join', params, function (err) {
     if (err) {
-      alert(err);
-      window.location.href = '/';
+      console.log(err);
+      window.location.href = '/joinChat';
     } else {
       console.log('No error');
     }

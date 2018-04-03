@@ -449,11 +449,21 @@ app.get('/deleteMessage', function (req, res) {
 });
 
 app.get('/chat', (req, res) => {
-    res.render('chat');
+    var logined = false;
+    if (req.session.sign) {
+        logined = true;
+        return res.render('chat');
+    }
+    res.render('index', {isLogined: logined});
 });
 
 app.get('/joinChat', (req, res) => {
-    res.render('joinChat');
+    var logined = false;
+    if (req.session.sign) {
+        logined = true;
+        return res.render('joinChat', {isLogined: logined});
+    }
+    res.render('index', {isLogined: logined});
 });
 
 app.post('/sendMessage', function(req, res){
