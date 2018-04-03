@@ -88,13 +88,21 @@
                 <span class="badge badge-warning">Message: <%= messagesize %></span>
             </div>
             <% for(var i = 0;i < messagesize;i++){ %>
+
             <li class="list-group-item">
                 <div class="card">
                     <div class="card-header">
                         <% if(allmessage[i].readornot == 0){ %>
                         <span class="badge badge-success">unseen</span>
+                        <span id="<%= allmessage[i]._id %>" class="badge badge-danger"
+                              style="float: right;cursor: pointer"
+                              onclick="deleteRecord(this.id)"><a
+                                    style="cursor: pointer">X</a></span>
                         <% }else{ %>
                         <span class="badge badge-dark">seen</span>
+                        <span class="badge badge-danger" style="float: right;cursor: pointer"
+                              onclick="deleteRecord()"><a
+                                    style="cursor: pointer">X</a></span>
                         <% } %>
                         <ul class="nav justify-content-end">
                             <li class="nav-item">
@@ -107,7 +115,9 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text"><%= allmessage[i].content %></p>
-                        <span class="badge badge-light"><a>Mark as read</a></span>
+                        <span id="<%= allmessage[i]._id %>" class="badge badge-light"
+                              onclick="markAsRead(this.id);"><a
+                                    style="cursor: pointer">Mark as read</a></span>
                     </div>
                 </div>
             </li>
@@ -134,8 +144,20 @@
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 <script>
-    function login() {
-        var x = document.getElementById("startLogin");
+    function markAsRead(id) {
+        var ele = "id=" + id;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+            }
+        };
+        xhttp.open("POST", "updateMessage", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(ele);
+    }
+
+    function deleteRecord(id) {
     }
 </script>
 </body>
