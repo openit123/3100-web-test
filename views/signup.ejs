@@ -54,6 +54,7 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    <input type="checkbox" onclick="myFunction()">Show Password
                 </div>
             </form>
 
@@ -80,6 +81,7 @@
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" name="password" class="form-control" id="passwd" placeholder="Password">
+                <input type="checkbox" onclick="myFunction()">Show Password
             </div>
 
             <div class="form-row">
@@ -154,6 +156,17 @@
     </div>
 
 </div>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("passwd");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
