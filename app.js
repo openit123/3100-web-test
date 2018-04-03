@@ -5,7 +5,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var multer = require('multer');
-var multer2 = require('multer');
 var mongojs = require('mongojs');
 var db = mongojs('myfirst', ['pets']);
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
@@ -30,7 +29,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const storage2 = multer2.diskStorage({
+const storage2 = multer.diskStorage({
 
     destination: './public/uploads/uncheck',
     filename: function (req, file, cb) {
@@ -46,7 +45,7 @@ const upload = multer({
     }
 }).single("myImage");
 
-const upload2 = multer2({
+const upload2 = multer({
     storage: storage2,
     limits: {fileSize: 1000000},
     fileFilter: function (req, file, cb) {
@@ -56,7 +55,7 @@ const upload2 = multer2({
 });
 
 function checkFileType(file, cb) {
-    const filetypes = /jpg/;
+    const filetypes = /jpg|jpeg|png|gif/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);
     if (mimetype && extname) {
@@ -194,7 +193,7 @@ app.post('/upload', function (req, res) {
                     pets: docs,
                 });
             });
-        } else {
+        }else {
             if (req.file == undefined) {
                 var username = {username: req.session.username};
                 db.pets.find(username).toArray(function (err2, docs) {
