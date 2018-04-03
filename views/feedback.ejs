@@ -74,17 +74,18 @@
     <!-- Main -->
     <div id="main">
 
-        <form>
+        <form id="form">
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Feedback</label>
-                <textarea class="form-control" id="text" rows="3"></textarea>
+                <textarea class="form-control" name="message" id="text" rows="3"></textarea>
             </div>
             <div class="alert alert-danger" role="alert" id="status" style="display: none">
             </div>
             <div class="alert alert-success" role="alert" id="status2" style="display: none">
                 This is a success alert—check it out!
             </div>
-            <button type="button" onclick="Mail()">Submit</button>
+            <input type="hidden" name="username" value="admin">
+            <button type="button" onclick="To_admin()">Submit</button>
         </form>
 
 
@@ -94,7 +95,7 @@
 <!-- Scripts -->
 
 <script>
-    function Mail() {
+    function To_admin() {
         var text = document.getElementById("text");
         var status = document.getElementById("status");
         var status2 = document.getElementById("status2");
@@ -112,8 +113,11 @@
                 status.style.display='block';
             }
             else {
-                window.location.href = "mailto:alvin2b35@yahoo.com.hk?subject=%5BPaw%2Dfect%20Match%5D%20Feedback&body=" + words;
-                status2.innerHTML = "One more step! Thank you for your support!";
+                document.getElementById("form").method="POST";
+                document.getElementById("form").action="/sendMessage";
+                document.getElementById("form").submit();
+                //window.location.href = "mailto:alvin2b35@yahoo.com.hk?subject=%5BPaw%2Dfect%20Match%5D%20Feedback&body=" + words;
+                status2.innerHTML = "Message sent to admin! Thank you for your support!";
                 status2.style.display='block';
                 status.style.display='none';
                 text.value = "";

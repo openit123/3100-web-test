@@ -60,6 +60,15 @@
 
     <!-- Main -->
     <div id="main">
+        <form>
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block" src="../uploads/<%= pets.username %>.jpg" height="200">
+                    </div>
+                </div>
+            </div>
+        </form>
         <form id="form">
             <div class="form-group">
                 <label for="emailaddr">Email address</label>
@@ -146,23 +155,14 @@
                 <textarea name="p_description" class="form-control" id="p_description" rows="8" style="border: none"
                           readonly><%=pets.p_description%></textarea>
             </div>
-            <div class="alert alert-danger" role="alert" id="fail" style="display: none">
-            </div>
-            <div class="alert alert-success" role="alert" id="success" style="display: none">
-                This is a success alert—check it out!
-            </div>
-
-        </form>
-
-        <form action="/sendMessage" method="POST">
             <div class="form-group">
                 <label for="exampleFormControlTextarea2">Message you want to send: </label>
-                <textarea name="message" class="form-control" id="message" rows="4" style="border: none"></textarea>
+                <textarea name="message" class="form-control" id="message" rows="4"></textarea>
             </div>
-            <input type="submit" value="Contact User">
-            <input type="hidden" name="username" value="<%=pets.username%>">
+            <button type="button" onClick="Contact()">Send Message</button>
             <button type="button" onClick="Return()">Match again</button>
         </form>
+
 
     </div>
 
@@ -170,8 +170,8 @@
 
 <script>
     function Contact(){
-        document.getElementById("form").method="GET";
-        document.getElementById("form").action="/insertMessage";
+        document.getElementById("form").method="POST";
+        document.getElementById("form").action="/sendMessage";
         document.getElementById("form").submit();
     }
 
