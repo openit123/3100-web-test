@@ -45,9 +45,17 @@ const storage = multer.diskStorage({
 
 const storage2 = multer.diskStorage({
 
-    destination: './public/uploads/uncheck',
+    destination: './public/images/',
     filename: function (req, file, cb) {
-        cb(null, un + Date.now() + path.extname(file.originalname));
+        cb(null, un + path.extname(file.originalname));
+    }
+});
+
+const storage3 = multer.diskStorage({
+
+    destination: './public/images/',
+    filename: function (req, file, cb) {
+        cb(null, un + '2' + path.extname(file.originalname));
     }
 });
 //Init upload
@@ -64,9 +72,18 @@ const upload2 = multer({
     limits: {fileSize: 1000000},
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
-    },
-    files: 2
-});
+    }
+}).single("myImage2");
+
+const upload3 = multer({
+    storage: storage3,
+    limits: {fileSize: 1000000},
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single("myImage3");
+
+
 
 function checkFileType(file, cb) {
     const filetypes = /jpg|jpeg|png|gif/;
@@ -210,7 +227,7 @@ app.post('/upload', function (req, res) {
                 });
             });
         } else {
-            if (req.body.myImage == undefined) {
+            if (req.file == undefined) {
                 var username = {username: req.session.username};
                 db.pets.find(username).toArray(function (err2, docs) {
                     console.log(docs);
@@ -238,7 +255,7 @@ app.post('/upload', function (req, res) {
     })
 })
 
-app.post('/upload2', upload2.any(), function (req, res) {
+app.post('/upload2', function (req, res) {
     var logined = false;
     if (req.session.sign) {
         console.log(req.session);
@@ -258,39 +275,78 @@ app.post('/upload2', upload2.any(), function (req, res) {
                 });
             });
         } else {
-            if(req.body.myImage2 == undefined && req.body.myImage3 == undefined){
+            if (req.file == undefined) {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err2, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg2: "Error: No File Selected!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            } else {
                 var username = {username: req.session.username};
                 db.pets.find(username).toArray(function (err, docs) {
                     console.log(docs);
                     res.render('profile.ejs', {
-                        msg2: "Error: No file selected!",
+                        msg2: "File Uploaded!",
                         res: res,
                         isLogined: logined,
                         pets: docs,
                     });
                 });
             }
-            else{
-                var i = 0;
-                if(req.body.image2 != undefined)
-                    i++;
-                if(req.body.image3 != undefined)
-                    i++;
-                console.log(i);
-                var username = {username: req.session.username};
-                db.pets.find(username).toArray(function (err, docs) {
-                    console.log(docs);
-                    res.render('profile.ejs', {
-                        msg2: "The photo(s) will be displayed after checking !",
-                        res: res,
-                        isLogined: logined,
-                        pets: docs,
-                    });
-                });
-            }
-
         }
+        // Everything went fine
+    })
+})
 
+app.post('/upload3', function (req, res) {
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
+    upload3(req, res, function (err) {
+        if (err) {
+            var username = {username: req.session.username};
+            db.pets.find(username).toArray(function (err2, docs) {
+                console.log(docs);
+                res.render('profile.ejs', {
+                    msg3: err,
+                    res: res,
+                    isLogined: logined,
+                    pets: docs,
+                });
+            });
+        } else {
+            if (req.file == undefined) {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err2, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg3: "Error: No File Selected!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            } else {
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg3: "File Uploaded!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            }
+        }
         // Everything went fine
     })
 })
