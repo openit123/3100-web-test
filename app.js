@@ -210,7 +210,7 @@ app.post('/upload', function (req, res) {
                 });
             });
         } else {
-            if (req.file == undefined) {
+            if (req.body.myImage == undefined) {
                 var username = {username: req.session.username};
                 db.pets.find(username).toArray(function (err2, docs) {
                     console.log(docs);
@@ -245,7 +245,7 @@ app.post('/upload2', upload2.any(), function (req, res) {
         logined = true;
     }
 
-    upload(req, res, function (err) {
+    upload2(req, res, function (err) {
         if (err) {
             var username = {username: req.session.username};
             db.pets.find(username).toArray(function (err2, docs) {
@@ -258,16 +258,37 @@ app.post('/upload2', upload2.any(), function (req, res) {
                 });
             });
         } else {
-            var username = {username: req.session.username};
-            db.pets.find(username).toArray(function (err, docs) {
-                console.log(docs);
-                res.render('profile.ejs', {
-                    msg2: "The photo(s) will be displayed after checking !",
-                    res: res,
-                    isLogined: logined,
-                    pets: docs,
+            if(req.body.myImage2 == undefined && req.body.myImage3 == undefined){
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg2: "Error: No file selected!",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
                 });
-            });
+            }
+            else{
+                var i = 0;
+                if(req.body.image2 != undefined)
+                    i++;
+                if(req.body.image3 != undefined)
+                    i++;
+                console.log(i);
+                var username = {username: req.session.username};
+                db.pets.find(username).toArray(function (err, docs) {
+                    console.log(docs);
+                    res.render('profile.ejs', {
+                        msg2: "The photo(s) will be displayed after checking !",
+                        res: res,
+                        isLogined: logined,
+                        pets: docs,
+                    });
+                });
+            }
+
         }
 
         // Everything went fine

@@ -79,12 +79,12 @@
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block" src="../uploads/<%= pets.username %>.jpg" height="200">
+                        <img id="pp" class="d-block"  height="200">
                     </div>
                 </div>
             </div>
         </form>
-        <bold>(For .jpg only)</bold>
+        <bold>(For .jpg, .jpeg, .png, .gif only)</bold>
         <%= typeof msg != 'undefined' ? msg : ' ' %>
         <form action="/upload" method="POST" enctype="multipart/form-data">
             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
@@ -94,7 +94,7 @@
         </form>
         <bold>Your can upload two photo of your pets !</bold>
         <p>
-            <bold>(For .jpg only)</bold>
+            <bold>(For .jpg, .jpeg, .png, .gif  only)</bold>
         <%= typeof msg2 != 'undefined' ? msg2 : ' ' %>
         <form action="/upload2" method="POST" enctype="multipart/form-data">
             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
@@ -245,7 +245,7 @@
         <%  }else {%>
         document.getElementById("undefined1").selected = "true";
         <%}%>
-
+        document.getElementById("pp").src="../uploads/<%= pets.username %>" + ".jpg";//|.jpeg|.png|.gif");
     }
 
     function Check_type_and_gender(){

@@ -157,6 +157,7 @@
         xhttp.open("POST", "updateMessage", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(ele);
+        location.reload();
     }
 
     function deleteRecord(id) {
@@ -170,6 +171,7 @@
         xhttp.open("POST", "deleteMessage", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(ele);
+        location.reload();
     }
 </script>
 </body>
