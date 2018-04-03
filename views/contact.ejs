@@ -151,8 +151,17 @@
             <div class="alert alert-success" role="alert" id="success" style="display: none">
                 This is a success alert—check it out!
             </div>
-            <button type="button" onclick="Return()">Match again</button>
-            <button type="button" onclick="Contact()">Contact user</button>
+
+        </form>
+
+        <form action="/sendMessage" method="POST">
+            <div class="form-group">
+                <label for="exampleFormControlTextarea2">Message you want to send: </label>
+                <textarea name="message" class="form-control" id="message" rows="4" style="border: none"></textarea>
+            </div>
+            <input type="submit" value="Contact User">
+            <input type="hidden" name="username" value="<%=pets.username%>">
+            <button type="button" onClick="Return()">Match again</button>
         </form>
 
     </div>

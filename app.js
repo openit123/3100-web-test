@@ -345,8 +345,8 @@ app.get('/message', function (req, res) {
         logined = true;
     }
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     var messagesize;
     var allmessage;
     var havemessage;
@@ -383,7 +383,8 @@ app.post('/updateMessage', function (req, res) {
     console.log(req.body.id);
     var ObjectId = require('mongodb').ObjectId;
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -400,8 +401,8 @@ app.post('/updateMessage', function (req, res) {
 
 app.get('/insertMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -433,8 +434,8 @@ app.get('/map', function (req, res) {
 
 app.get('/deleteMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
@@ -455,10 +456,16 @@ app.get('/joinChat', (req, res) => {
     res.render('joinChat');
 });
 
-app.post('/sendMessage', function (req, res) {
+app.post('/sendMessage', function(req, res){
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
     var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+    var logined = false;
+    if (req.session.sign) {
+        console.log(req.session);
+        logined = true;
+    }
+
     var username = {username: req.session.username};
 
     MongoClient.connect(url, function (err, db) {
@@ -474,17 +481,26 @@ app.post('/sendMessage', function (req, res) {
         var obj = {
             form: username.username,
             to: req.body.username,
-            content: "hi my phone number is 12345678",
+            content: req.body.message,
             readornot: "0",
             submittime: generateTime
         };
-        dbo.collection("messageRecord").insertOne(obj).toArray(function (err, result) {
+        dbo.collection("messageRecord").insertOne(obj, function (err, result) {
             if (err) throw err;
             console.log("success");
             db.close();
         });
     });
-});
+
+    db.pets.find(function (err, docs) {
+        console.log(docs);
+        res.render('search.ejs', {
+            res: res,
+            isLogined: logined,
+            pets: docs,
+        });
+    })
+})
 
 app.post('matching', function (req, res) {
     console.log("ajax request");
@@ -550,8 +566,8 @@ app.post('/search', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body.username,
         req.body.password);
-    var url = "mongodb://192.168.1.51:27017/";
-    //var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+    //var url = "mongodb://192.168.1.51:27017/";
+    var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
