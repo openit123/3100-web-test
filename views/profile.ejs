@@ -95,14 +95,27 @@
         <bold>Your can upload two photo of your pets !</bold>
         <p>
             <bold>(For .jpg only)</bold>
+        <div class="form-row">
+
         <%= typeof msg2 != 'undefined' ? msg2 : ' ' %>
+            <p>
         <form action="/upload2" method="POST" enctype="multipart/form-data">
             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
-                 <input type="file" name="myImage2" class="form-control-file" id="exampleFormControlFile1" >
+                <img class="d-block" src="../images/<%= pets.username %>.jpg" height="200">
+                <input type="file" name="myImage2" class="form-control-file" id="exampleFormControlFile1" >
+                <button type="submit" class="button small fit">Upload</button>
+            </span>
+        </form>
+        <%= typeof msg3 != 'undefined' ? msg3 : ' ' %>
+        <p>
+        <form action="/upload3" method="POST" enctype="multipart/form-data">
+            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
+                <img class="d-block" src="../images/<%= pets.username %>2.jpg" height="200">
                 <input type="file" name="myImage3" class="form-control-file" id="exampleFormControlFile1" >
                 <button type="submit" class="button small fit">Upload</button>
             </span>
         </form>
+        </div>
         <form id="form">
             <div class="form-group">
                 <label for="emailaddr">Email address</label>
