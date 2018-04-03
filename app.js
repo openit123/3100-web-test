@@ -209,7 +209,7 @@ app.post('/upload', function (req, res) {
                     pets: docs,
                 });
             });
-        }else {
+        } else {
             if (req.file == undefined) {
                 var username = {username: req.session.username};
                 db.pets.find(username).toArray(function (err2, docs) {
@@ -406,10 +406,10 @@ app.post('/updateMessage', function (req, res) {
         var dbo = db.db("myfirst");
         var id = req.body.id;
         var o_id = new ObjectId(id)
-        dbo.collection("messageRecord").find({_id: o_id}).toArray(function (err, result) {
+        var newvalues = {$set: {readornot: "1"}};
+        dbo.collection("messageRecord").updateOne({_id: o_id}, newvalues, function (err, result) {
             if (err) throw err;
             console.log(result);
-            console.log(result.length);
             db.close();
         });
     });
@@ -448,15 +448,19 @@ app.get('/map', function (req, res) {
     res.render('template.ejs');
 });
 
-app.get('/deleteMessage', function (req, res) {
+app.post('/deleteMessage', function (req, res) {
+    console.log(req.body.id);
+    var ObjectId = require('mongodb').ObjectId;
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
     var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("myfirst");
-        var obj = {data_time: '2018-3-2@14:6'};
-        dbo.collection("messageRecord").deleteOne(obj, function (err, result) {
+        var id = req.body.id;
+        var o_id = new ObjectId(id);
+        console.log(id);
+        dbo.collection("messageRecord").deleteOne({"_id": o_id}, function (err, result) {
             if (err) throw err;
             console.log("success");
             db.close();
@@ -465,14 +469,24 @@ app.get('/deleteMessage', function (req, res) {
 });
 
 app.get('/chat', (req, res) => {
-    res.render('chat');
+    var logined = false;
+    if (req.session.sign) {
+        logined = true;
+        return res.render('chat');
+    }
+    res.render('index', {isLogined: logined});
 });
 
 app.get('/joinChat', (req, res) => {
-    res.render('joinChat');
+    var logined = false;
+    if (req.session.sign) {
+        logined = true;
+        return res.render('joinChat', {isLogined: logined});
+    }
+    res.render('index', {isLogined: logined});
 });
 
-app.post('/sendMessage', function(req, res){
+app.post('/sendMessage', function (req, res) {
     var MongoClient = require('mongodb').MongoClient;
     //var url = "mongodb://192.168.1.51:27017/";
     var url = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";

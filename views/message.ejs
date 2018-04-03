@@ -100,8 +100,8 @@
                                     style="cursor: pointer">X</a></span>
                         <% }else{ %>
                         <span class="badge badge-dark">seen</span>
-                        <span class="badge badge-danger" style="float: right;cursor: pointer"
-                              onclick="deleteRecord()"><a
+                        <span id="<%= allmessage[i]._id %>" class="badge badge-danger" style="float: right;cursor: pointer"
+                              onclick="deleteRecord(this.id)"><a
                                     style="cursor: pointer">X</a></span>
                         <% } %>
                         <ul class="nav justify-content-end">
@@ -115,9 +115,11 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text"><%= allmessage[i].content %></p>
+                        <% if(allmessage[i].readornot == 0){ %>
                         <span id="<%= allmessage[i]._id %>" class="badge badge-light"
                               onclick="markAsRead(this.id);"><a
                                     style="cursor: pointer">Mark as read</a></span>
+                        <% } %>
                     </div>
                 </div>
             </li>
@@ -158,6 +160,16 @@
     }
 
     function deleteRecord(id) {
+        var ele = "id=" + id;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+            }
+        };
+        xhttp.open("POST", "deleteMessage", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(ele);
     }
 </script>
 </body>
