@@ -1,9 +1,6 @@
-/**
- * jQuery.deparam - The oposite of jQuery param. Creates an object of query string parameters.
- *
- * Credits for the idea and Regex:
- * http://stevenbenner.com/2010/03/javascript-regex-trick-parse-a-query-string-into-an-object/
-*/
+// This fragment of codes referenced the materials in an online course on udemy that I participated in:
+// https://www.udemy.com/the-complete-nodejs-developer-course-2/learn/v4/overview
+
 (function($){
   $.deparam = $.deparam || function(uri){
     if(uri === undefined){

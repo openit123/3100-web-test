@@ -1,13 +1,5 @@
-[{
-    id: '/#sajldhlk1',
-    name: 'User1',
-    room: 'room1'
-}]
-
-// addUserID(id, name, room)
-// removeUser(id)
-// getUser(id)
-// getUserList(room)
+// This fragment of codes referenced the materials in an online course on udemy that I participated in:
+// https://www.udemy.com/the-complete-nodejs-developer-course-2/learn/v4/overview
 
 class Users {
     constructor () {

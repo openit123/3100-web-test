@@ -29,6 +29,9 @@ var server = http.createServer(app);
 /**
  * Config socket.io
  */
+// This fragment of codes referenced the materials in an online course on udemy that I participated in:
+// https://www.udemy.com/the-complete-nodejs-developer-course-2/learn/v4/overview
+
 // chat room function
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -77,6 +80,8 @@ io.on('connection', (socket) => {
   
   
 });
+
+// End of referenced code fragment
 
 
 /**
